@@ -16,7 +16,7 @@ import com.andrewpanasyuk.university.Student;
 public class StudentDao {
 	public static final Logger log = Logger.getLogger(StudentDao.class);
 
-	public void createStudent(Student student) throws DAOExeption {
+	public void createStudent(Student student) throws DAOException {
 		log.info("request to create Student");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -32,7 +32,7 @@ public class StudentDao {
 			log.info("Student was created");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -45,12 +45,12 @@ public class StudentDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
-	public void removeStudent(Student student) throws DAOExeption {
+	public void removeStudent(Student student) throws DAOException {
 		log.info("Request to remove student with ID = " + student.getId());
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -65,7 +65,7 @@ public class StudentDao {
 			log.info("Student was removed");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -78,12 +78,12 @@ public class StudentDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
-	public void updateStudentFirstName(Student student, String newFirstName) throws DAOExeption {
+	public void updateStudentFirstName(Student student, String newFirstName) throws DAOException {
 		log.info("Request to update Student's first name");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -99,7 +99,7 @@ public class StudentDao {
 			log.info("First name was updated");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -112,12 +112,12 @@ public class StudentDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
-	public void updateStudentLastName(Student student, String newLastName) throws DAOExeption {
+	public void updateStudentLastName(Student student, String newLastName) throws DAOException {
 		log.info("Request to update Student's last name");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -133,7 +133,7 @@ public class StudentDao {
 			log.info("Last name was updated");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -146,12 +146,12 @@ public class StudentDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
-	public List<Student> getAllStudents() throws DAOExeption{
+	public List<Student> getAllStudents() throws DAOException{
 		log.info("Request to get a list for all students");
 		List<Student> students = new ArrayList<>();
 		Connection con = null;
@@ -179,7 +179,7 @@ public class StudentDao {
 			}
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (result != null) {
@@ -196,7 +196,7 @@ public class StudentDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 
 		}
@@ -204,7 +204,7 @@ public class StudentDao {
 		return students;
 	}
 
-	public Student getLastStudent() throws DAOExeption {
+	public Student getLastStudent() throws DAOException {
 		log.info("Request to get last added student");
 		Student student = new Student();
 		Connection con = null;
@@ -226,7 +226,7 @@ public class StudentDao {
 			}
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (result != null) {
@@ -243,7 +243,7 @@ public class StudentDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 
 		}
@@ -251,7 +251,7 @@ public class StudentDao {
 		return student;
 	}
 
-	public Student getStudentById(int id) throws DAOExeption {
+	public Student getStudentById(int id) throws DAOException {
 		log.info("Request to getting student by ID. ID = " + id);
 		Student student = null;
 		Connection con = null;
@@ -281,7 +281,7 @@ public class StudentDao {
 			}
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (result != null) {
@@ -298,7 +298,7 @@ public class StudentDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 
 		}

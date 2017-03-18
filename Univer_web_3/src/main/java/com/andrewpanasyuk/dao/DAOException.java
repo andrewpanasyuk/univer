@@ -1,26 +1,26 @@
 package com.andrewpanasyuk.dao;
 
 @SuppressWarnings("serial")
-public class DAOExeption extends Exception {
+public class DAOException extends Exception {
 
-	public DAOExeption() {
+	public DAOException() {
 		super();
 	}
 
-	public DAOExeption(String message, Throwable cause,
+	public DAOException(String message, Throwable cause,
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
-	public DAOExeption(String message, Throwable cause) {
+	public DAOException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public DAOExeption(String message) {
+	public DAOException(String message) {
 		super(message);
 	}
 
-	public DAOExeption(Throwable cause) {
+	public DAOException(Throwable cause) {
 		super(cause);
 	}
 

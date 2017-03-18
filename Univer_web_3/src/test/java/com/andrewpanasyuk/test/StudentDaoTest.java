@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.andrewpanasyuk.dao.DAOExeption;
+import com.andrewpanasyuk.dao.DAOException;
 import com.andrewpanasyuk.dao.StudentDao;
 import com.andrewpanasyuk.university.Student;
 
@@ -27,7 +27,7 @@ public class StudentDaoTest {
 			Student lastAddStudent = studentDao.getLastStudent();
 			assertTrue(student.equals(lastAddStudent));
 			studentDao.removeStudent(lastAddStudent);
-		} catch (DAOExeption e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		
@@ -42,7 +42,7 @@ public class StudentDaoTest {
 			assertNotNull(studentDao.getStudentById(student_id));
 			studentDao.removeStudent(lastAddStudent);
 			assertNull(studentDao.getStudentById(student_id));
-		} catch (DAOExeption e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		
@@ -59,7 +59,7 @@ public class StudentDaoTest {
 			lastAddStudent = studentsDao.getLastStudent();
 			assertTrue(lastAddStudent.getFirstName().equals(newName));
 			studentsDao.removeStudent(lastAddStudent);
-		} catch (DAOExeption e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		
@@ -76,7 +76,7 @@ public class StudentDaoTest {
 			lastAddStudent = studentsDao.getLastStudent();
 			assertTrue(lastAddStudent.getLastName().equals(newName));
 			studentsDao.removeStudent(lastAddStudent);
-		} catch (DAOExeption e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		

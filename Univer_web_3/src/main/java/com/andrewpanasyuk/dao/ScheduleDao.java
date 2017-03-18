@@ -21,7 +21,7 @@ import com.andrewpanasyuk.university.WeekDay;
 public class ScheduleDao {
 	private static final Logger log = Logger.getLogger(ScheduleDao.class);
 
-	public void addLesson(Lesson lesson) throws DAOExeption {
+	public void addLesson(Lesson lesson) throws DAOException {
 		log.info("Request to add lesson");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -42,7 +42,7 @@ public class ScheduleDao {
 			log.info("Lesson was added");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -55,13 +55,13 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: "
+				throw new DAOException("Error with closing the database: "
 						+ e.getMessage());
 			}
 		}
 	}
 
-	public List<Lesson> getGroupLessons(Group group) throws DAOExeption {
+	public List<Lesson> getGroupLessons(Group group) throws DAOException {
 		log.info("Request to get schedule for group with ID " + group.getId());
 		List<Lesson> lessons = new ArrayList<>();
 		Connection con = null;
@@ -92,7 +92,7 @@ public class ScheduleDao {
 					log.trace("Seted data");
 				} catch (ParseException e) {
 					log.warn(e.toString());
-					throw new DAOExeption("Data base error: " + e.getMessage());
+					throw new DAOException("Data base error: " + e.getMessage());
 				}
 				lesson.setWeekDay(WeekDay.valueOf(result.getString("weekDay")));
 				lesson.setAuditorium(result.getInt("auditorium"));
@@ -109,7 +109,7 @@ public class ScheduleDao {
 			log.trace("Created list of lessons");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (result != null) {
@@ -126,14 +126,14 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 		log.info("Return schedule for group");
 		return lessons;
 	}
 
-	public List<Lesson> getTeacherLessons(Teacher teacher) throws DAOExeption {
+	public List<Lesson> getTeacherLessons(Teacher teacher) throws DAOException {
 		log.info("Request schedule for teacher");
 		List<Lesson> lessons = new ArrayList<>();
 		Connection con = null;
@@ -179,7 +179,7 @@ public class ScheduleDao {
 			log.trace("Created list of lessons");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (result != null) {
@@ -196,7 +196,7 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 		log.info("Return schedule for teacher");
@@ -204,7 +204,7 @@ public class ScheduleDao {
 	}
 
 	public void updateAuditorium(Lesson lesson, int newAuditoriumNumber)
-			throws DAOExeption {
+			throws DAOException {
 		log.info("Request to update auditorium number");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -220,7 +220,7 @@ public class ScheduleDao {
 			log.info("Auditorium number was updated");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -233,13 +233,13 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
 	public void updateTeacher(Lesson lesson, Teacher newTeacher)
-			throws DAOExeption {
+			throws DAOException {
 		log.info("Request to update teacher");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -255,7 +255,7 @@ public class ScheduleDao {
 			log.info("Teacher was update");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -268,12 +268,12 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
-	public void updateGroup(Lesson lesson, Group newGroup) throws DAOExeption {
+	public void updateGroup(Lesson lesson, Group newGroup) throws DAOException {
 		log.info("Request to update group");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -289,7 +289,7 @@ public class ScheduleDao {
 			log.info("Group was update");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -302,13 +302,13 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
 	public void updateName(Lesson lesson, String newLessonName)
-			throws DAOExeption {
+			throws DAOException {
 		log.info("Request to update lesson name");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -324,7 +324,7 @@ public class ScheduleDao {
 			log.info("Lesson name was updated");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -337,12 +337,12 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
-	public void updateDate(Lesson lesson, Date newDate) throws DAOExeption {
+	public void updateDate(Lesson lesson, Date newDate) throws DAOException {
 		log.info("Request to update date");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -359,7 +359,7 @@ public class ScheduleDao {
 			log.info("Date was updated");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -372,13 +372,13 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
 	public void updateWeekDay(Lesson lesson, WeekDay newWeekDay)
-			throws DAOExeption {
+			throws DAOException {
 		log.info("Request to update week day");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -394,7 +394,7 @@ public class ScheduleDao {
 			log.info("Week day was updated");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -407,12 +407,12 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
-	public void removeLesson(Lesson lesson) throws DAOExeption {
+	public void removeLesson(Lesson lesson) throws DAOException {
 		log.info("Request to remove lesson");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -427,7 +427,7 @@ public class ScheduleDao {
 			log.info("Lesson was removed");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (statement != null) {
@@ -440,12 +440,12 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 	}
 
-	public List<Lesson> getAllLessons() throws DAOExeption {
+	public List<Lesson> getAllLessons() throws DAOException {
 		log.info("Request to get all lessons");
 		List<Lesson> lessons = new ArrayList<>();
 		Connection con = null;
@@ -493,7 +493,7 @@ public class ScheduleDao {
 			log.trace("Created list of lessons");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (result != null) {
@@ -510,14 +510,14 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 		log.info("Return list of lessons");
 		return lessons;
 	}
 
-	public Lesson getLastLesson() throws DAOExeption {
+	public Lesson getLastLesson() throws DAOException {
 		log.info("Request to get lesson");
 		Lesson lesson = new Lesson();
 		Connection con = null;
@@ -564,7 +564,7 @@ public class ScheduleDao {
 			log.trace("Created list of lessons");
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (result != null) {
@@ -581,14 +581,14 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 		log.info("Return list of lessons");
 		return lesson;
 	}
 
-	public Lesson getLessonByID(int lesson_id) throws DAOExeption {
+	public Lesson getLessonByID(int lesson_id) throws DAOException {
 		log.info("Request lesson by ID");
 		Lesson lesson = null;
 		Connection con = null;
@@ -635,7 +635,7 @@ public class ScheduleDao {
 			}
 		} catch (SQLException e) {
 			log.warn(e.toString());
-			throw new DAOExeption("Data base error: " + e.getMessage());
+			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
 				if (result != null) {
@@ -652,7 +652,7 @@ public class ScheduleDao {
 				}
 			} catch (SQLException e) {
 				log.warn(e.toString());
-				throw new DAOExeption("Error with closing the database: " + e.getMessage());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
 		}
 		log.info("Return lesson by ID");

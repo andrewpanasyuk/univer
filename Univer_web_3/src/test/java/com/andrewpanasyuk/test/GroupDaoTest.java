@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.andrewpanasyuk.dao.DAOExeption;
+import com.andrewpanasyuk.dao.DAOException;
 import com.andrewpanasyuk.dao.GroupDao;
 import com.andrewpanasyuk.dao.StudentDao;
 import com.andrewpanasyuk.university.Group;
@@ -35,7 +35,7 @@ public class GroupDaoTest {
 			Group lastAddGroup = groupDao.getLastGroup();
 			assertTrue(group.equals(lastAddGroup));
 			groupDao.removeGroup(lastAddGroup);
-		} catch (DAOExeption e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		
@@ -51,7 +51,7 @@ public class GroupDaoTest {
 			assertNotNull(groupDao.getGroupById(group_id));
 			groupDao.removeGroup(lastGroupBeforeRemove);
 			assertNull(groupDao.getGroupById(group_id));
-		} catch (DAOExeption e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		
@@ -67,7 +67,7 @@ public class GroupDaoTest {
 			lastGroup = groupDao.getLastGroup();
 			assertTrue(lastGroup.getName().equals(newName));
 			groupDao.removeGroup(lastGroup);
-		} catch (DAOExeption e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		
@@ -85,7 +85,7 @@ public class GroupDaoTest {
 			assertTrue(lastAddStudent.getGroup().getId() == lastGroup.getId());
 			studentDao.removeStudent(lastAddStudent);
 			groupDao.removeGroup(lastGroup);
-		} catch (DAOExeption e) {
+		} catch (DAOException e) {
 			e.printStackTrace();
 		}
 		
