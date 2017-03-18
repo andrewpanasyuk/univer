@@ -8,16 +8,16 @@
 <title>Index</title>
 </head>
 <body>
-	<a href="${pageContext.servletContext.contextPath}/views/groups">Show
+	<a href="${pageContext.servletContext.contextPath}/GroupShowServlet">Show
 		all groups</a>
 	<br>
-	<a href="${pageContext.servletContext.contextPath}/views/students">Show
+	<a href="${pageContext.servletContext.contextPath}/StudentShowServlet">Show
 		all students</a>
 	<br>
-	<a href="${pageContext.servletContext.contextPath}/views/teachers">Show
+	<a href="${pageContext.servletContext.contextPath}/TeacherShowController">Show
 		all teachers</a>
 	<br>
-	<a href="${pageContext.servletContext.contextPath}/views/schedules">Show
+	<a href="${pageContext.servletContext.contextPath}/ScheduleShowServlet">Show
 		all lessons</a>
 	<br>
 </body>
