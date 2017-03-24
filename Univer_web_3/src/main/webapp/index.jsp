@@ -14,7 +14,7 @@
 	<a href="${pageContext.servletContext.contextPath}/StudentShowServlet">Show
 		all students</a>
 	<br>
-	<a href="${pageContext.servletContext.contextPath}/TeacherShowController">Show
+	<a href="${pageContext.servletContext.contextPath}/TeacherShowServlet">Show
 		all teachers</a>
 	<br>
 	<a href="${pageContext.servletContext.contextPath}/ScheduleShowServlet">Show

@@ -6,41 +6,42 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lessons</title>
-
+<title>Group Lessons</title>
 </head>
 <body>
-	All lessons:
-	<br>
-	<a href="${pageContext.servletContext.contextPath}/ScheduleAddLesson">add
-		new Lesson</a>
-	<br>
 	<form
-		action="${pageContext.servletContext.contextPath }/ScheduleDateServlet"
+		action="${pageContext.servletContext.contextPath }/ScheduleDateLessonForGroup"
 		method="post">
+		<input type="hidden" name="id" value="${group.id}">
+		<p>
+			Schedule for <b> ${group.name}</b>
+		</p>
 		<p>
 			Show lessons on <input type="date" name="date"> <input
 				type="submit" value="select">
 		</p>
 	</form>
-	<form action="${pageContext.servletContext.contextPath }/SchedulePeriodServlet" method="post">
+
+	<form
+		action="${pageContext.servletContext.contextPath }/ScheduleDatesLessonForGroupServlet"
+		method="post">
+		<input type="hidden" name="id" value="${group.id}">
 		<p>
 			Show schedule from <input type="date" name="dateFrom"> to <input
 				type="date" name="dateTo"> <input type="submit"
 				value="select">
 		</p>
 	</form>
+
 	<table border="1">
 		<tr>
-			<th>Lesson name</th>
+			<th>Subject</th>
 			<th>Date</th>
 			<th>Time</th>
 			<th>WeekDay</th>
 			<th>Auditorium</th>
 			<th>Teacher</th>
 			<th>Group</th>
-			<th>Update</th>
-			<th>Remove</th>
 		</tr>
 		<c:forEach items="${lessons}" var="lesson">
 			<tr>
@@ -54,10 +55,6 @@
 				<td>${lesson.auditorium}</td>
 				<td>${lesson.teacher.lastName}</td>
 				<td>${lesson.group.name}</td>
-				<td><a
-					href="${pageContext.servletContext.contextPath}/ScheduleUpdateServlet?id=${lesson.id}">Update</a></td>
-				<td><a
-					href="${pageContext.servletContext.contextPath}/ScheduleRemoveLesson?id=${lesson.id}">Remove</a></td>
 
 			</tr>
 		</c:forEach>

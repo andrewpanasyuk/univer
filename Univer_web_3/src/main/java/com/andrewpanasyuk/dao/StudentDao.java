@@ -116,6 +116,40 @@ public class StudentDao {
 			}
 		}
 	}
+	
+	public void updateGroup(Student student, Group group) throws DAOException {
+		log.info("Request to update group");
+		Connection con = null;
+		PreparedStatement statement = null;
+		String sql = "UPDATE students SET group_id = ? WHERE student_id = ?";
+		try {
+			log.trace("Open connect");
+			con = ConnectionFactory.getConnect();
+			log.trace("Create prepared statement");
+			statement = con.prepareStatement(sql);
+			statement.setInt(1, group.getId());
+			statement.setInt(2, student.getId());
+			statement.execute();
+			log.info("Group was updated");
+		} catch (SQLException e) {
+			log.warn(e.toString());
+			throw new DAOException("Data base error: " + e.getMessage());
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+					log.trace("Statement was closed");
+				}
+				if (con != null) {
+					con.close();
+					log.trace("Connection was closed");
+				}
+			} catch (SQLException e) {
+				log.warn(e.toString());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
+			}
+		}
+	}
 
 	public void updateStudentLastName(Student student, String newLastName) throws DAOException {
 		log.info("Request to update Student's last name");
@@ -157,7 +191,7 @@ public class StudentDao {
 		Connection con = null;
 		Statement statement = null;
 		ResultSet result = null;
-		String sql = "SELECT * FROM students";
+		String sql = "SELECT * FROM students FULL OUTER JOIN groups ON students.group_id = groups.group_id WHERE students.group_id > 0";
 		try {
 			log.trace("Open connect");
 			con = ConnectionFactory.getConnect();
@@ -172,6 +206,9 @@ public class StudentDao {
 				student.setLastName(result.getString("last_name"));
 				Group group = new Group();
 				group.setId(result.getInt("group_id"));
+//				if (group.getId() != 0){
+					group.setName(result.getString("name"));
+//				}
 				student.setGroup(group);
 				log.trace("create Student");
 				students.add(student);

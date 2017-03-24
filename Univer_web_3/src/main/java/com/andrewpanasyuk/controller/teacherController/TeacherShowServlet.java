@@ -14,29 +14,33 @@ import com.andrewpanasyuk.controller.ControllerException;
 import com.andrewpanasyuk.dao.TeacherDao;
 import com.andrewpanasyuk.university.Teacher;
 
-@WebServlet("/TeacherShowController")
+@WebServlet("/TeacherShowServlet")
 public class TeacherShowServlet extends HttpServlet {
-	
-	private static final Logger log = Logger.getLogger(TeacherShowServlet.class);
+
+	private static final Logger log = Logger
+			.getLogger(TeacherShowServlet.class);
 	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-	try {
-		procesRequest(request, response);
-	} catch (ControllerException e) {
-		log.error(e.toString());
-	}
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			procesRequest(request, response);
+		} catch (ControllerException e) {
+			log.error(e.toString());
+		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response){
-	try {
-		procesRequest(request, response);
-	} catch (ControllerException e) {
-		log.error(e.toString());
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			procesRequest(request, response);
+		} catch (ControllerException e) {
+			log.error(e.toString());
+		}
 	}
-	}
-	
-	protected void procesRequest(HttpServletRequest request, HttpServletResponse response) throws ControllerException {
+
+	protected void procesRequest(HttpServletRequest request,
+			HttpServletResponse response) throws ControllerException {
 		TeacherDao teacherDao = new TeacherDao();
 		List<Teacher> teachers;
 		try {
@@ -49,8 +53,7 @@ public class TeacherShowServlet extends HttpServlet {
 			log.error(e.toString());
 			throw new ControllerException();
 		}
-		
-		
+
 	}
 
 }

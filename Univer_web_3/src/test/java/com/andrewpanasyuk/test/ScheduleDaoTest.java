@@ -50,7 +50,6 @@ public class ScheduleDaoTest {
 		cal.set(Calendar.MINUTE, 30);
 		Date date = cal.getTime();
 		lesson.setDate(date);
-		lesson.setWeekDay(WeekDay.values()[cal.get(Calendar.DAY_OF_WEEK) - 1]);
 	}
 	
 	@Test
@@ -204,12 +203,8 @@ public class ScheduleDaoTest {
 			lesson.setTeacher(lastAddTeacher);
 			scheduleDao.addLesson(lesson);
 			Lesson lessonTest = scheduleDao.getLastLesson();
-			Calendar cal = Calendar.getInstance();
-			cal.set(1999, Calendar.JANUARY, 01);
-			cal.set(Calendar.HOUR_OF_DAY, 10);
-			cal.set(Calendar.MINUTE, 0);
-			Date newDate = cal.getTime();
-			scheduleDao.updateDate(lessonTest, newDate);
+			String newDateString = "01-01-1900 10:00";
+			scheduleDao.updateDate(lessonTest, newDateString);
 			lessonTest = scheduleDao.getLastLesson();
 			assertTrue(lessonTest.getDate().before(lesson.getDate()));
 			scheduleDao.removeLesson(lessonTest);

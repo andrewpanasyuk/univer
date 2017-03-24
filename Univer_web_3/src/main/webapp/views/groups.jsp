@@ -9,15 +9,23 @@
 </head>
 <body>
 	All groups:	<br>
+	<a href="${pageContext.servletContext.contextPath}/views/groups/GroupCreate.jsp"> Create new Group</a><br>
 	<table border="1">
 		<tr>
 			<th>Group ID</th>
 			<th>Group name</th>
+			<th>Schedule</th>
+			<th>Update</th>
+			<th>Remove</th>
 		</tr>
 		<c:forEach items="${groups}" var="group">
 			<tr>
 				<td>${group.id}</td>
-				<td>${group.name}</td>
+				<td><a href="${pageContext.servletContext.contextPath}/GroupSelectStudentsServlet?id=${group.id}">${group.name}</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/ScheduleForGroupServlet?id=${group.id}">Schedule</a></td>
+				
+				<td><a href="${pageContext.servletContext.contextPath}/GroupUpdateServlet?id=${group.id}">Update</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/GroupRemoveServlet?id=${group.id}">Remove</a></td>
 			</tr>
 		</c:forEach>
 	</table>

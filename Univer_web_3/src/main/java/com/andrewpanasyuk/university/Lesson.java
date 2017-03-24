@@ -1,5 +1,6 @@
 package com.andrewpanasyuk.university;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -29,13 +30,19 @@ public class Lesson {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+		setWeekDay(date);
 	}
 	public WeekDay getWeekDay() {
 		return weekDay;
 	}
-	public void setWeekDay(WeekDay weekDay) {
-		this.weekDay = weekDay;
+	
+	private void setWeekDay(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int day = cal.get(Calendar.DAY_OF_WEEK) - 1;
+		this.weekDay = WeekDay.values()[day];
 	}
+	
 	public int getAuditorium() {
 		return auditorium;
 	}

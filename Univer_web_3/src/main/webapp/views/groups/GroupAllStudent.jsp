@@ -5,34 +5,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Students</title>
+<title>Insert title here</title>
 </head>
 <body>
-	All students:
-	<br>
-	<a href="${pageContext.servletContext.contextPath}/StudentAddServlet">Create Student</a>
+	All students from Group ${group.name}:
 	<br>
 	<table border="1">
 		<tr>
 			<th>Student ID</th>
 			<th>First name</th>
 			<th>Last name</th>
-			<th>Group</th>
-			<th>Update</th>
-			<th>Remove</th>
 		</tr>
-		<c:forEach items="${students}" var="student">
+		<c:forEach items="${group.students}" var="student">
 			<tr>
 				<td>${student.id}</td>
 				<td>${student.firstName}</td>
 				<td>${student.lastName}</td>
-				<td>${student.group.name}</td>
-				<td><a href="${pageContext.servletContext.contextPath}/StudentUpdateServlet?id=${student.id}">Update</a></td>
-				<td><a href="${pageContext.servletContext.contextPath}/StudentRemoveServlet?id=${student.id}">Remove</a></td>
-				
+
 			</tr>
 		</c:forEach>
 	</table>
-	
+
 </body>
 </html>

@@ -94,7 +94,6 @@ public class ScheduleDao {
 					log.warn(e.toString());
 					throw new DAOException("Data base error: " + e.getMessage());
 				}
-				lesson.setWeekDay(WeekDay.valueOf(result.getString("weekDay")));
 				lesson.setAuditorium(result.getInt("auditorium"));
 				teacher.setFirstName(result.getString("first_name"));
 				teacher.setLastName(result.getString("last_name"));
@@ -132,7 +131,260 @@ public class ScheduleDao {
 		log.info("Return schedule for group");
 		return lessons;
 	}
+	public List<Lesson> getGroupLessonsBetweenDates(String dateFromString, String dateToString, Group group) throws DAOException {
+		SimpleDateFormat timeFormatForTime = new SimpleDateFormat(
+				"yyyy-MM-dd hh:mm");
+		
+		List<Lesson> lessons = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		String sql = "SELECT * FROM schedule INNER JOIN groups ON schedule.group_id = groups.group_id "
+				+ "INNER JOIN teachers ON schedule.teacher_id = teachers.teacher_id "
+				+ "WHERE groups.group_id = ? AND schedule.date BETWEEN ?  AND  ?";
+		try {
+			Date dateFrom = null;
+			Date dateTo = null;
+			try {
+				dateFrom = timeFormatForTime.parse(dateFromString + " 00:00");
+				dateTo = timeFormatForTime.parse(dateToString + " 23:59");
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			log.trace("Open connect");
+			con = ConnectionFactory.getConnect();
+			log.trace("Create prepared statement");
+			statement = con.prepareStatement(sql);
+			statement.setInt(1, group.getId());
+			statement.setTimestamp(2, new java.sql.Timestamp(dateFrom.getTime()));
+			statement.setTimestamp(3, new java.sql.Timestamp(dateTo.getTime()));
+			statement.execute();
+			result = statement.getResultSet();
+			log.trace("Create result table");
+			while (result.next()) {
+				Teacher teacher = new Teacher();
+				Lesson lesson = new Lesson();
+				lesson.setId(result.getInt("lesson_id"));
+				lesson.setName(result.getString("lesson_name"));
+				String dateS = result.getTimestamp("date").toString();
+				Date date;
+				try {
+					date = timeFormatForTime.parse(dateS);
+					lesson.setDate(date);
+					log.trace("Seted data");
+				} catch (ParseException e) {
+					log.warn(e.toString());
+					throw new DAOException("Data base error: " + e.getMessage());
+				}
+				lesson.setAuditorium(result.getInt("auditorium"));
+				teacher.setFirstName(result.getString("first_name"));
+				teacher.setLastName(result.getString("last_name"));
+				teacher.setId(result.getInt("teacher_id"));
+				lesson.setTeacher(teacher);
+				log.trace("Teacher was added to lesson");
+				lesson.setGroup(group);
+				log.trace("Group was added to lesson");
+				lessons.add(lesson);
+				log.trace("Lesson was added to list of lessons");
+			}
+			log.trace("Created list of lessons");
+		} catch (SQLException e) {
+			log.warn(e.toString());
+			throw new DAOException("Data base error: " + e.getMessage());
+		} finally {
+			try {
+				if (result != null) {
+					result.close();
+					log.trace("Result was closed");
+				}
+				if (statement != null) {
+					statement.close();
+					log.trace("Statement was closed");
+				}
+				if (con != null) {
+					con.close();
+					log.trace("Connection was closed");
+				}
+			} catch (SQLException e) {
+				log.warn(e.toString());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
+			}
+		}
+		log.info("Return schedule for group");
+		return lessons;
+	}
+	
+	public List<Lesson> getTeacherLessonsBetweenDates(String dateFromString, String dateToString, Teacher teacher) throws DAOException {
+		SimpleDateFormat timeFormatForTime = new SimpleDateFormat(
+				"yyyy-MM-dd hh:mm");
+		
+		List<Lesson> lessons = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		String sql = "SELECT * FROM schedule INNER JOIN groups ON schedule.group_id = groups.group_id "
+				+ "INNER JOIN teachers ON schedule.teacher_id = teachers.teacher_id "
+				+ "WHERE teachers.teacher_id = ? AND schedule.date BETWEEN ?  AND  ?";
+		try {
+			Date dateFrom = null;
+			Date dateTo = null;
+			try {
+				dateFrom = timeFormatForTime.parse(dateFromString + " 00:00");
+				dateTo = timeFormatForTime.parse(dateToString + " 23:59");
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			log.trace("Open connect");
+			con = ConnectionFactory.getConnect();
+			log.trace("Create prepared statement");
+			statement = con.prepareStatement(sql);
+			statement.setInt(1, teacher.getId());
+			statement.setTimestamp(2, new java.sql.Timestamp(dateFrom.getTime()));
+			statement.setTimestamp(3, new java.sql.Timestamp(dateTo.getTime()));
+			statement.execute();
+			result = statement.getResultSet();
+			log.trace("Create result table");
+			while (result.next()) {
+				Group group = new Group();
+				Lesson lesson = new Lesson();
+				lesson.setId(result.getInt("lesson_id"));
+				lesson.setName(result.getString("lesson_name"));
+				String dateS = result.getTimestamp("date").toString();
+				Date date;
+				try {
+					date = timeFormatForTime.parse(dateS);
+					lesson.setDate(date);
+					log.trace("Seted data");
+				} catch (ParseException e) {
+					log.warn(e.toString());
+					throw new DAOException("Data base error: " + e.getMessage());
+				}
+				lesson.setAuditorium(result.getInt("auditorium"));
+				group.setId(result.getInt("group_id"));
+				group.setName(result.getString("name"));
+				lesson.setGroup(group);
+				log.trace("Group was added to lesson");
+				lesson.setTeacher(teacher);
+				log.trace("Teacher was added to lesson");
+				lessons.add(lesson);
+				log.trace("Lesson was added to list of lessons");
+			}
+			log.trace("Created list of lessons");
+		} catch (SQLException e) {
+			log.warn(e.toString());
+			throw new DAOException("Data base error: " + e.getMessage());
+		} finally {
+			try {
+				if (result != null) {
+					result.close();
+					log.trace("Result was closed");
+				}
+				if (statement != null) {
+					statement.close();
+					log.trace("Statement was closed");
+				}
+				if (con != null) {
+					con.close();
+					log.trace("Connection was closed");
+				}
+			} catch (SQLException e) {
+				log.warn(e.toString());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
+			}
+		}
+		log.info("Return schedule for group");
+		return lessons;
+	}
 
+	public List<Lesson> getScheduleBetweenDates(String dateFromString, String dateToString) throws DAOException {
+		SimpleDateFormat timeFormatForTime = new SimpleDateFormat(
+				"yyyy-MM-dd hh:mm");
+		
+		List<Lesson> lessons = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		String sql = "SELECT * FROM schedule INNER JOIN groups ON schedule.group_id = groups.group_id "
+				+ "INNER JOIN teachers ON schedule.teacher_id = teachers.teacher_id "
+				+ "WHERE schedule.date BETWEEN ?  AND  ?";
+		try {
+			Date dateFrom = null;
+			Date dateTo = null;
+			try {
+				dateFrom = timeFormatForTime.parse(dateFromString + " 00:00");
+				dateTo = timeFormatForTime.parse(dateToString + " 23:59");
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			log.trace("Open connect");
+			con = ConnectionFactory.getConnect();
+			log.trace("Create prepared statement");
+			statement = con.prepareStatement(sql);
+			statement.setTimestamp(1, new java.sql.Timestamp(dateFrom.getTime()));
+			statement.setTimestamp(2, new java.sql.Timestamp(dateTo.getTime()));
+			statement.execute();
+			result = statement.getResultSet();
+			log.trace("Create result table");
+			while (result.next()) {
+				Group group = new Group();
+				Lesson lesson = new Lesson();
+				Teacher teacher = new Teacher();
+				lesson.setId(result.getInt("lesson_id"));
+				lesson.setName(result.getString("lesson_name"));
+				String dateS = result.getTimestamp("date").toString();
+				Date date;
+				try {
+					date = timeFormatForTime.parse(dateS);
+					lesson.setDate(date);
+					log.trace("Seted data");
+				} catch (ParseException e) {
+					log.warn(e.toString());
+					throw new DAOException("Data base error: " + e.getMessage());
+				}
+				lesson.setAuditorium(result.getInt("auditorium"));
+				group.setId(result.getInt("group_id"));
+				group.setName(result.getString("name"));
+				teacher.setFirstName(result.getString("first_name"));
+				teacher.setLastName(result.getString("last_name"));
+				teacher.setId(result.getInt("teacher_id"));
+				lesson.setTeacher(teacher);
+				lesson.setGroup(group);
+				log.trace("Group was added to lesson");
+				lesson.setTeacher(teacher);
+				log.trace("Teacher was added to lesson");
+				lessons.add(lesson);
+				log.trace("Lesson was added to list of lessons");
+			}
+			log.trace("Created list of lessons");
+		} catch (SQLException e) {
+			log.warn(e.toString());
+			throw new DAOException("Data base error: " + e.getMessage());
+		} finally {
+			try {
+				if (result != null) {
+					result.close();
+					log.trace("Result was closed");
+				}
+				if (statement != null) {
+					statement.close();
+					log.trace("Statement was closed");
+				}
+				if (con != null) {
+					con.close();
+					log.trace("Connection was closed");
+				}
+			} catch (SQLException e) {
+				log.warn(e.toString());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
+			}
+		}
+		log.info("Return schedule for group");
+		return lessons;
+	}
+	
 	public List<Lesson> getTeacherLessons(Teacher teacher) throws DAOException {
 		log.info("Request schedule for teacher");
 		List<Lesson> lessons = new ArrayList<>();
@@ -165,7 +417,6 @@ public class ScheduleDao {
 				} catch (ParseException e) {
 					log.warn(e.toString());
 				}
-				lesson.setWeekDay(WeekDay.valueOf(result.getString("weekDay")));
 				lesson.setAuditorium(result.getInt("auditorium"));
 				group.setId(result.getInt("group_id"));
 				group.setName(result.getString("name"));
@@ -342,7 +593,17 @@ public class ScheduleDao {
 		}
 	}
 
-	public void updateDate(Lesson lesson, Date newDate) throws DAOException {
+	public void updateDate(Lesson lesson, String newDate) throws DAOException {
+		SimpleDateFormat timeFormatForTime = new SimpleDateFormat(
+				"yyyy-MM-dd hh:mm");
+		Date date = null;
+		try {
+			date = timeFormatForTime.parse(newDate);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		log.info("Request to update date");
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -353,7 +614,7 @@ public class ScheduleDao {
 			log.trace("Create prepared statement");
 			statement = con.prepareStatement(sql);
 			statement
-					.setTimestamp(1, new java.sql.Timestamp(newDate.getTime()));
+					.setTimestamp(1, new java.sql.Timestamp(date.getTime()));
 			statement.setInt(2, lesson.getId());
 			statement.execute();
 			log.info("Date was updated");
@@ -475,7 +736,6 @@ public class ScheduleDao {
 				} catch (ParseException e) {
 					log.warn(e.toString());
 				}
-				lesson.setWeekDay(WeekDay.valueOf(result.getString("weekDay")));
 				lesson.setAuditorium(result.getInt("auditorium"));
 				teacher.setFirstName(result.getString("first_name"));
 				teacher.setLastName(result.getString("last_name"));
@@ -552,7 +812,6 @@ public class ScheduleDao {
 				} catch (ParseException e) {
 					log.warn(e.toString());
 				}
-				lesson.setWeekDay(WeekDay.valueOf(result.getString("weekDay")));
 				lesson.setAuditorium(result.getInt("auditorium"));
 				Group group = new Group();
 				group.setId(result.getInt("group_id"));
@@ -620,7 +879,6 @@ public class ScheduleDao {
 				} catch (ParseException e) {
 					log.warn(e.toString());
 				}
-				lesson.setWeekDay(WeekDay.valueOf(result.getString("weekDay")));
 				lesson.setAuditorium(result.getInt("auditorium"));
 				teacher.setFirstName(result.getString("first_name"));
 				teacher.setLastName(result.getString("last_name"));
