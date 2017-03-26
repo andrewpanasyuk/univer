@@ -27,7 +27,7 @@ public class TeacherDaoTest {
 			Teacher lastAddTeacher = teacherDao.getLastTeacher();
 			teacher.setId(lastAddTeacher.getId());
 			assertTrue(teacher.equals(lastAddTeacher));
-			teacherDao.removeTeachers(lastAddTeacher);
+			teacherDao.removeTeacher(lastAddTeacher);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -41,7 +41,7 @@ public class TeacherDaoTest {
 			Teacher lastAddTeacher = teacherDao.getLastTeacher();
 			int teacher_id = lastAddTeacher.getId();
 			assertNotNull(teacherDao.getTeacherByID(teacher_id));
-			teacherDao.removeTeachers(lastAddTeacher);
+			teacherDao.removeTeacher(lastAddTeacher);
 			assertNull(teacherDao.getTeacherByID(teacher_id));
 		} catch (DAOException e) {
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class TeacherDaoTest {
 			teacherDao.updateTeacherFirstName(lastAddTeacher, newName);
 			lastAddTeacher = teacherDao.getLastTeacher();
 			assertTrue(lastAddTeacher.getFirstName().equals(newName));
-			teacherDao.removeTeachers(lastAddTeacher);
+			teacherDao.removeTeacher(lastAddTeacher);
 
 		} catch (DAOException e) {
 			e.printStackTrace();
@@ -74,7 +74,7 @@ public class TeacherDaoTest {
 			teacherDao.updateTeacherLastName(lastAddTeacher, newName);
 			lastAddTeacher = teacherDao.getLastTeacher();
 			assertTrue(lastAddTeacher.getLastName().equals(newName));
-			teacherDao.removeTeachers(lastAddTeacher);
+			teacherDao.removeTeacher(lastAddTeacher);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}

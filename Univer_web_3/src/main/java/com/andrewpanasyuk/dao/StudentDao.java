@@ -10,12 +10,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.andrewpanasyuk.service.StudentService;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
-public class StudentDao {
+public class StudentDao implements StudentService {
 	public static final Logger log = Logger.getLogger(StudentDao.class);
 
+	@Override
 	public void createStudent(Student student) throws DAOException {
 		log.info("request to create Student");
 		Connection con = null;
@@ -50,6 +52,7 @@ public class StudentDao {
 		}
 	}
 
+	@Override
 	public void removeStudent(Student student) throws DAOException {
 		log.info("Request to remove student with ID = " + student.getId());
 		Connection con = null;
@@ -83,6 +86,7 @@ public class StudentDao {
 		}
 	}
 
+	@Override
 	public void updateStudentFirstName(Student student, String newFirstName) throws DAOException {
 		log.info("Request to update Student's first name");
 		Connection con = null;
@@ -117,6 +121,7 @@ public class StudentDao {
 		}
 	}
 	
+	@Override
 	public void updateGroup(Student student, Group group) throws DAOException {
 		log.info("Request to update group");
 		Connection con = null;
@@ -151,6 +156,7 @@ public class StudentDao {
 		}
 	}
 
+	@Override
 	public void updateStudentLastName(Student student, String newLastName) throws DAOException {
 		log.info("Request to update Student's last name");
 		Connection con = null;
@@ -185,6 +191,7 @@ public class StudentDao {
 		}
 	}
 
+	@Override
 	public List<Student> getAllStudents() throws DAOException{
 		log.info("Request to get a list for all students");
 		List<Student> students = new ArrayList<>();
@@ -206,9 +213,7 @@ public class StudentDao {
 				student.setLastName(result.getString("last_name"));
 				Group group = new Group();
 				group.setId(result.getInt("group_id"));
-//				if (group.getId() != 0){
 					group.setName(result.getString("name"));
-//				}
 				student.setGroup(group);
 				log.trace("create Student");
 				students.add(student);
@@ -241,6 +246,7 @@ public class StudentDao {
 		return students;
 	}
 
+	@Override
 	public Student getLastStudent() throws DAOException {
 		log.info("Request to get last added student");
 		Student student = new Student();
@@ -288,6 +294,7 @@ public class StudentDao {
 		return student;
 	}
 
+	@Override
 	public Student getStudentById(int id) throws DAOException {
 		log.info("Request to getting student by ID. ID = " + id);
 		Student student = null;

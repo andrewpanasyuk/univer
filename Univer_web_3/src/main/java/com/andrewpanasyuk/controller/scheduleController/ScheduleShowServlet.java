@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.controller.ControllerException;
-import com.andrewpanasyuk.dao.ScheduleDao;
 import com.andrewpanasyuk.university.Lesson;
 
 @WebServlet("/ScheduleShowServlet")
@@ -39,10 +39,8 @@ public class ScheduleShowServlet extends HttpServlet {
 
 	protected void procesRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ControllerException {
-		ScheduleDao schedueDao = new ScheduleDao();
-		List<Lesson> lessons;
 		try {
-			lessons = schedueDao.getAllLessons();
+			List<Lesson> lessons = Controller.scheduleService.getAllLessons();
 			request.setAttribute("lessons", lessons);
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/views/schedules.jsp");

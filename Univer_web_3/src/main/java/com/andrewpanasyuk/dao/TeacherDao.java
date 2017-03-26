@@ -10,11 +10,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.andrewpanasyuk.service.TeacherService;
 import com.andrewpanasyuk.university.Teacher;
 
-public class TeacherDao {
+public class TeacherDao implements TeacherService {
 	public static final Logger log = Logger.getLogger(TeacherDao.class);
 
+	@Override
 	public void createTeacher(Teacher teacher) throws DAOException{
 		log.info("Request to create Teacher");
 		Connection con = null;
@@ -49,7 +51,9 @@ public class TeacherDao {
 		}
 	}
 
-	public void removeTeachers(Teacher teacher) throws DAOException{
+	
+	@Override
+	public void removeTeacher(Teacher teacher) throws DAOException{
 		log.info("Request to remove Teacher. ID = " + teacher.getId());
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -82,6 +86,7 @@ public class TeacherDao {
 		}
 	}
 
+	@Override
 	public void updateTeacherFirstName(Teacher teacher, String newFirstName) throws DAOException {
 		log.info("Request to rename teacher with ID = " + teacher.getId());
 		Connection con = null;
@@ -116,6 +121,7 @@ public class TeacherDao {
 		}
 	}
 
+	@Override
 	public void updateTeacherLastName(Teacher teacher, String newLastName) throws DAOException {
 		log.info("Request to change teacher's last name for Teacher with ID = "
 				+ teacher.getId());
@@ -151,6 +157,7 @@ public class TeacherDao {
 		}
 	}
 
+	@Override
 	public List<Teacher> getAllTeachers() throws DAOException{
 		log.info("Request for getting list of all teachers");
 		List<Teacher> teachers = new ArrayList<>();
@@ -248,6 +255,7 @@ public class TeacherDao {
 		return teacher;
 	}
 
+	@Override
 	public Teacher getTeacherByID(int teacher_id) throws DAOException{
 		log.info("request for getting Teacher by ID. ID = " + teacher_id);
 		Teacher teacher = null;

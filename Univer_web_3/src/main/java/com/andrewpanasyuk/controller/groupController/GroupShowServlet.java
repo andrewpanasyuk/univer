@@ -8,8 +8,8 @@ import javax.servlet.http.*;
 
 import org.apache.log4j.Logger;
 
+import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.controller.ControllerException;
-import com.andrewpanasyuk.dao.GroupDao;
 import com.andrewpanasyuk.university.Group;
 
 @WebServlet("/GroupShowServlet")
@@ -38,14 +38,14 @@ public class GroupShowServlet extends HttpServlet {
 
 	protected void procesRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ControllerException {
-		log.info("procesRequest for Group");
-		GroupDao groupDao = new GroupDao();
-		List<Group> groups;
+		log.info("proces Request for Group");
 		try {
-			groups = groupDao.getAllGroups();
+			List<Group> groups = Controller.groupService.getAllGroups();
 			request.setAttribute("groups", groups);
+			log.info("Set list 'Groups' to request");
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/views/groups.jsp");
+			log.info("Sent request to groups.jsp");
 			dispatcher.forward(request, response);
 
 		} catch (Exception e) {

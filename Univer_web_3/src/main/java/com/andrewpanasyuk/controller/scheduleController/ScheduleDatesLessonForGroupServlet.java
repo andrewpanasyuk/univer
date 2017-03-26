@@ -10,26 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
+import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.GroupDao;
-import com.andrewpanasyuk.dao.ScheduleDao;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 
 @WebServlet("/ScheduleDatesLessonForGroupServlet")
 public class ScheduleDatesLessonForGroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(ScheduleDatesLessonForGroupServlet.class);
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ScheduleDao scheduleDao = new ScheduleDao();
-		GroupDao groupDao = new GroupDao();
 		int groupId = Integer.valueOf(request.getParameter("id"));
 		try {
-			Group group = groupDao.getGroupById(groupId);
+			Group group = Controller.groupService.getGroupById(groupId);
 			String dateFrom = request.getParameter("dateFrom");
 			String dateTo = request.getParameter("dateTo");
-			List<Lesson> lessons = scheduleDao.getGroupLessonsBetweenDates(
+			List<Lesson> lessons = Controller.scheduleService.getGroupLessonsBetweenDates(
 					dateFrom, dateTo, group);
 			request.setAttribute("lessons", lessons);
 			request.setAttribute("group", group);
@@ -38,8 +38,7 @@ public class ScheduleDatesLessonForGroupServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 

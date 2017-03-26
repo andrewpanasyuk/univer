@@ -8,14 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.apache.log4j.Logger;
 
+import com.andrewpanasyuk.service.GroupService;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
-public class GroupDao {
+public class GroupDao implements GroupService{
 	private static final Logger log = Logger.getLogger(GroupDao.class);
 
+	@Override
 	public void addGroup(Group group) throws DAOException{
 		log.info("Request to add group");
 		Connection con = null;
@@ -49,6 +52,7 @@ public class GroupDao {
 		}
 	}
 
+	@Override
 	public void removeGroup(Group group) throws DAOException {
 		log.info("Request to remove group");
 		Connection con = null;
@@ -82,6 +86,7 @@ public class GroupDao {
 		}
 	}
 
+	@Override
 	public void renameGroup(Group group, String newName) throws DAOException{
 		log.info("Request to rename group");
 		Connection con = null;
@@ -116,6 +121,7 @@ public class GroupDao {
 		}
 	}
 
+	@Override
 	public void addStudent(Group group, Student student) throws DAOException{
 		log.info("Request to add student into group");
 		Connection con = null;
@@ -150,6 +156,7 @@ public class GroupDao {
 		}
 	}
 
+	@Override
 	public List<Student> getAllStudents(Group group) throws DAOException {
 		log.info("Request to get all student from group with ID " + group.getId());
 		List<Student> students = new ArrayList<>();
@@ -202,6 +209,7 @@ public class GroupDao {
 		return students;
 	}
 	
+	@Override
 	public Group getGroupById(int group_id) throws DAOException{
 		log.info("Request to get group by ID " + group_id);
 		Group group = null;
@@ -251,6 +259,7 @@ public class GroupDao {
 		return group;
 	}
 
+	@Override
 	public List<Group> getAllGroups() throws DAOException{
 		log.info("Request to get list of all groups");
 		List<Group> groups = new ArrayList<>();
@@ -346,4 +355,5 @@ public class GroupDao {
 		log.info("Return last group");
 		return group;
 	}
+
 }

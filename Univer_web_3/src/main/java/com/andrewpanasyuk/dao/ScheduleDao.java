@@ -13,14 +13,15 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.andrewpanasyuk.service.ScheduleService;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 import com.andrewpanasyuk.university.Teacher;
-import com.andrewpanasyuk.university.WeekDay;
 
-public class ScheduleDao {
+public class ScheduleDao implements ScheduleService{
 	private static final Logger log = Logger.getLogger(ScheduleDao.class);
 
+	@Override
 	public void addLesson(Lesson lesson) throws DAOException {
 		log.info("Request to add lesson");
 		Connection con = null;
@@ -61,6 +62,7 @@ public class ScheduleDao {
 		}
 	}
 
+	@Override
 	public List<Lesson> getGroupLessons(Group group) throws DAOException {
 		log.info("Request to get schedule for group with ID " + group.getId());
 		List<Lesson> lessons = new ArrayList<>();
@@ -131,6 +133,8 @@ public class ScheduleDao {
 		log.info("Return schedule for group");
 		return lessons;
 	}
+	
+	@Override
 	public List<Lesson> getGroupLessonsBetweenDates(String dateFromString, String dateToString, Group group) throws DAOException {
 		SimpleDateFormat timeFormatForTime = new SimpleDateFormat(
 				"yyyy-MM-dd hh:mm");
@@ -215,6 +219,7 @@ public class ScheduleDao {
 		return lessons;
 	}
 	
+	@Override
 	public List<Lesson> getTeacherLessonsBetweenDates(String dateFromString, String dateToString, Teacher teacher) throws DAOException {
 		SimpleDateFormat timeFormatForTime = new SimpleDateFormat(
 				"yyyy-MM-dd hh:mm");
@@ -298,6 +303,7 @@ public class ScheduleDao {
 		return lessons;
 	}
 
+	@Override
 	public List<Lesson> getScheduleBetweenDates(String dateFromString, String dateToString) throws DAOException {
 		SimpleDateFormat timeFormatForTime = new SimpleDateFormat(
 				"yyyy-MM-dd hh:mm");
@@ -385,6 +391,7 @@ public class ScheduleDao {
 		return lessons;
 	}
 	
+	@Override
 	public List<Lesson> getTeacherLessons(Teacher teacher) throws DAOException {
 		log.info("Request schedule for teacher");
 		List<Lesson> lessons = new ArrayList<>();
@@ -454,6 +461,7 @@ public class ScheduleDao {
 		return lessons;
 	}
 
+	@Override
 	public void updateAuditorium(Lesson lesson, int newAuditoriumNumber)
 			throws DAOException {
 		log.info("Request to update auditorium number");
@@ -489,6 +497,7 @@ public class ScheduleDao {
 		}
 	}
 
+	@Override
 	public void updateTeacher(Lesson lesson, Teacher newTeacher)
 			throws DAOException {
 		log.info("Request to update teacher");
@@ -524,6 +533,7 @@ public class ScheduleDao {
 		}
 	}
 
+	@Override
 	public void updateGroup(Lesson lesson, Group newGroup) throws DAOException {
 		log.info("Request to update group");
 		Connection con = null;
@@ -558,6 +568,7 @@ public class ScheduleDao {
 		}
 	}
 
+	@Override
 	public void updateName(Lesson lesson, String newLessonName)
 			throws DAOException {
 		log.info("Request to update lesson name");
@@ -593,6 +604,7 @@ public class ScheduleDao {
 		}
 	}
 
+	@Override
 	public void updateDate(Lesson lesson, String newDate) throws DAOException {
 		SimpleDateFormat timeFormatForTime = new SimpleDateFormat(
 				"yyyy-MM-dd hh:mm");
@@ -638,41 +650,8 @@ public class ScheduleDao {
 		}
 	}
 
-	public void updateWeekDay(Lesson lesson, WeekDay newWeekDay)
-			throws DAOException {
-		log.info("Request to update week day");
-		Connection con = null;
-		PreparedStatement statement = null;
-		String sql = "UPDATE schedule SET weekDay = ? WHERE lesson_id = ?";
-		try {
-			log.trace("Open connect");
-			con = ConnectionFactory.getConnect();
-			log.trace("Create prepared statement");
-			statement = con.prepareStatement(sql);
-			statement.setString(1, newWeekDay.toString());
-			statement.setInt(2, lesson.getId());
-			statement.execute();
-			log.info("Week day was updated");
-		} catch (SQLException e) {
-			log.warn(e.toString());
-			throw new DAOException("Data base error: " + e.getMessage());
-		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-					log.trace("Statement was closed");
-				}
-				if (con != null) {
-					con.close();
-					log.trace("Connection was closed");
-				}
-			} catch (SQLException e) {
-				log.warn(e.toString());
-				throw new DAOException("Error with closing the database: " + e.getMessage());
-			}
-		}
-	}
 
+	@Override
 	public void removeLesson(Lesson lesson) throws DAOException {
 		log.info("Request to remove lesson");
 		Connection con = null;
@@ -706,6 +685,7 @@ public class ScheduleDao {
 		}
 	}
 
+	@Override
 	public List<Lesson> getAllLessons() throws DAOException {
 		log.info("Request to get all lessons");
 		List<Lesson> lessons = new ArrayList<>();
@@ -847,6 +827,7 @@ public class ScheduleDao {
 		return lesson;
 	}
 
+	@Override
 	public Lesson getLessonByID(int lesson_id) throws DAOException {
 		log.info("Request lesson by ID");
 		Lesson lesson = null;

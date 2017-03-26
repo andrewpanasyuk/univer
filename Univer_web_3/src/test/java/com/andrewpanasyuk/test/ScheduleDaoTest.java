@@ -91,7 +91,7 @@ public class ScheduleDaoTest {
 			assertTrue(lesson.equals(lastAddLesson));
 			scheduleDao.removeLesson(lastAddLesson);
 			groupDao.removeGroup(lastGroup);
-			teacherDao.removeTeachers(lastAddTeacher);			
+			teacherDao.removeTeacher(lastAddTeacher);			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -113,7 +113,7 @@ public class ScheduleDaoTest {
 			assertTrue((lessonTest.getAuditorium() == 0));
 			scheduleDao.removeLesson(lessonTest);
 			groupDao.removeGroup(lastGroup);
-			teacherDao.removeTeachers(lastAddTeacher);			
+			teacherDao.removeTeacher(lastAddTeacher);			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -137,8 +137,8 @@ public class ScheduleDaoTest {
 			assertTrue(lessonTest.getTeacher().getId() == newTeacher.getId());
 			scheduleDao.removeLesson(lessonTest);
 			groupDao.removeGroup(lastGroup);
-			teacherDao.removeTeachers(lastAddTeacher);
-			teacherDao.removeTeachers(newTeacher);			
+			teacherDao.removeTeacher(lastAddTeacher);
+			teacherDao.removeTeacher(newTeacher);			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -163,7 +163,7 @@ public class ScheduleDaoTest {
 			scheduleDao.removeLesson(lessonTest);
 			groupDao.removeGroup(lastGroup);
 			groupDao.removeGroup(newGroup);
-			teacherDao.removeTeachers(lastAddTeacher);			
+			teacherDao.removeTeacher(lastAddTeacher);			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -186,7 +186,7 @@ public class ScheduleDaoTest {
 			assertTrue(lessonTest.getName().equals("newTestName"));
 			scheduleDao.removeLesson(lessonTest);
 			groupDao.removeGroup(lastGroup);
-			teacherDao.removeTeachers(lastAddTeacher);			
+			teacherDao.removeTeacher(lastAddTeacher);			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -209,7 +209,7 @@ public class ScheduleDaoTest {
 			assertTrue(lessonTest.getDate().before(lesson.getDate()));
 			scheduleDao.removeLesson(lessonTest);
 			groupDao.removeGroup(lastGroup);
-			teacherDao.removeTeachers(lastAddTeacher);
+			teacherDao.removeTeacher(lastAddTeacher);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -227,12 +227,11 @@ public class ScheduleDaoTest {
 			lesson.setTeacher(lastAddTeacher);
 			scheduleDao.addLesson(lesson);
 			Lesson lessonTest = scheduleDao.getLastLesson();
-			scheduleDao.updateWeekDay(lessonTest, WeekDay.SUNDAY);
 			lessonTest = scheduleDao.getLastLesson();
 			assertTrue(lessonTest.getWeekDay().equals(WeekDay.SUNDAY));
 			scheduleDao.removeLesson(lessonTest);
 			groupDao.removeGroup(lastGroup);
-			teacherDao.removeTeachers(lastAddTeacher);			
+			teacherDao.removeTeacher(lastAddTeacher);			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -253,7 +252,7 @@ public class ScheduleDaoTest {
 			assertTrue(lessonTest.getTeacher().getId() == lastAddTeacher.getId());
 			scheduleDao.removeLesson(lessonTest);
 			groupDao.removeGroup(lastGroup);
-			teacherDao.removeTeachers(lastAddTeacher);			
+			teacherDao.removeTeacher(lastAddTeacher);			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -273,7 +272,7 @@ public class ScheduleDaoTest {
 			assertTrue(lessonTest.getGroup().getId() == lastGroup.getId());
 			scheduleDao.removeLesson(lessonTest);
 			groupDao.removeGroup(lastGroup);
-			teacherDao.removeTeachers(lastAddTeacher);			
+			teacherDao.removeTeacher(lastAddTeacher);			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}

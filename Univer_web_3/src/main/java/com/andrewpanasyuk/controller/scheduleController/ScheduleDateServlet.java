@@ -10,20 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
+import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.ScheduleDao;
 import com.andrewpanasyuk.university.Lesson;
 
 @WebServlet("/ScheduleDateServlet")
 public class ScheduleDateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(ScheduleDateServlet.class);
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ScheduleDao scheduleDao = new ScheduleDao();
 		try {
 			String date = request.getParameter("date");
-			List<Lesson> lessons = scheduleDao.getScheduleBetweenDates(date,
+			List<Lesson> lessons = Controller.scheduleService.getScheduleBetweenDates(date,
 					date);
 			request.setAttribute("lessons", lessons);
 			RequestDispatcher dispatcher = request
@@ -31,8 +33,7 @@ public class ScheduleDateServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.controller.ControllerException;
-import com.andrewpanasyuk.dao.StudentDao;
 import com.andrewpanasyuk.university.Student;
 
 @WebServlet("/StudentShowServlet")
@@ -40,10 +40,8 @@ public class StudentShowServlet extends HttpServlet {
 
 	protected void procesRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ControllerException {
-		StudentDao studentDao = new StudentDao();
-		List<Student> students;
 		try {
-			students = studentDao.getAllStudents();
+			List<Student> students = Controller.studentService.getAllStudents();
 			request.setAttribute("students", students);
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/views/students.jsp");

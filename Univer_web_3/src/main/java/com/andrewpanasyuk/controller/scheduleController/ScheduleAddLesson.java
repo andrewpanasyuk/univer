@@ -8,25 +8,26 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+import org.apache.log4j.Logger;
+
+import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.*;
 import com.andrewpanasyuk.university.*;
 
 @WebServlet("/ScheduleAddLesson")
 public class ScheduleAddLesson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(ScheduleAddLesson.class);
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		TeacherDao teacherDao = new TeacherDao();
-		GroupDao groupDao = new GroupDao();
 		try {
-			List<Group> groups = groupDao.getAllGroups();
-			List<Teacher> teachers = teacherDao.getAllTeachers();
+			List<Group> groups = Controller.groupService.getAllGroups();
+			List<Teacher> teachers = Controller.teacherService.getAllTeachers();
 			request.setAttribute("groups", groups);
 			request.setAttribute("teachers", teachers);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		RequestDispatcher dispatcher = request
 				.getRequestDispatcher("/views/lessons/ScheduleCreateLesson.jsp");
@@ -36,25 +37,19 @@ public class ScheduleAddLesson extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		ScheduleDao scheduleDao = new ScheduleDao();
 		Lesson lesson = new Lesson();
 		lesson.setName(request.getParameter("subject"));
 		int auditorium = Integer.valueOf(request.getParameter("auditorium"));
 		lesson.setAuditorium(auditorium);
-		GroupDao groupDao = new GroupDao();
 		int group_id = Integer.valueOf(request.getParameter("group"));
-		Group group;
-		TeacherDao teacherDao = new TeacherDao();
 		int teacher_id = Integer.valueOf(request.getParameter("teacher"));
-		Teacher teacher;
 		try {
-			group = groupDao.getGroupById(group_id);
-			teacher = teacherDao.getTeacherByID(teacher_id);
+			Group group = Controller.groupService.getGroupById(group_id);
+			Teacher teacher = Controller.teacherService.getTeacherByID(teacher_id);
 			lesson.setGroup(group);
 			lesson.setTeacher(teacher);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		SimpleDateFormat format = new SimpleDateFormat();
 		format.applyPattern("MM/dd/yyyy hh:mm");
@@ -66,11 +61,10 @@ public class ScheduleAddLesson extends HttpServlet {
 			Date docDate = format.parse(time);
 			lesson.setDate(docDate);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		try {
-			scheduleDao.addLesson(lesson);
+			Controller.scheduleService.addLesson(lesson);
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
