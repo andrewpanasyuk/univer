@@ -8,14 +8,18 @@ import javax.servlet.http.*;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.controller.ControllerException;
+import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
 import com.andrewpanasyuk.university.Group;
 
 @WebServlet("/GroupShowServlet")
 public class GroupShowServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(GroupShowServlet.class);
+	private static GroupServiceIF groupDB = new GroupService();
+
+	
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -40,7 +44,7 @@ public class GroupShowServlet extends HttpServlet {
 			HttpServletResponse response) throws ControllerException {
 		log.info("proces Request for Group");
 		try {
-			List<Group> groups = Controller.groupService.getAllGroups();
+			List<Group> groups = groupDB.getAllGroups();
 			request.setAttribute("groups", groups);
 			log.info("Set list 'Groups' to request");
 			RequestDispatcher dispatcher = request

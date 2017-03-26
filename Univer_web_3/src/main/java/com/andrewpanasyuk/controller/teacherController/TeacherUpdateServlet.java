@@ -11,20 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.service.TeacherService;
+import com.andrewpanasyuk.service.serviceIF.TeacherServiceIF;
 import com.andrewpanasyuk.university.Teacher;
 
 @WebServlet("/TeacherUpdateServlet")
 public class TeacherUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(TeacherUpdateServlet.class);
+	private TeacherServiceIF teacherService = new TeacherService();
+
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Teacher teacher = Controller.teacherService.getTeacherByID(id);
+			Teacher teacher = teacherService.getTeacherByID(id);
 			request.setAttribute("teacher", teacher);
 		} catch (DAOException e) {
 			log.error(e.getMessage());
@@ -37,13 +40,12 @@ public class TeacherUpdateServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		String newFirstName = request.getParameter("first name");
 		String newLastName = request.getParameter("last name");
 		try {
-			Teacher teacher = Controller.teacherService.getTeacherByID(id);
-			Controller.teacherService.updateTeacherFirstName(teacher, newFirstName);
-			Controller.teacherService.updateTeacherLastName(teacher, newLastName);
+			teacherService.updateTeacherFirstName(id, newFirstName);
+			teacherService.updateTeacherLastName(id, newLastName);
 		} catch (DAOException e) {
 			log.error(e.getMessage());
 		}

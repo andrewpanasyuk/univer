@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.service.StudentService;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
+import com.andrewpanasyuk.service.serviceIF.StudentServiceIF;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
@@ -21,11 +24,13 @@ import com.andrewpanasyuk.university.Student;
 public class StudentAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(StudentAddServlet.class);
+	private StudentServiceIF studentService = new StudentService();
+	private GroupServiceIF groupService = new GroupService();
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
-			List<Group> groups = Controller.groupService.getAllGroups();
+			List<Group> groups = groupService.getAllGroups();
 			request.setAttribute("groups", groups);
 		} catch (DAOException e) {
 			log.error(e.getMessage());
@@ -40,16 +45,12 @@ public class StudentAddServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String firstName = request.getParameter("first name");
 		String lastName = request.getParameter("last name");
-		int groupId = Integer.valueOf(request.getParameter("group"));
-		Student student = new Student();
-		student.setFirstName(firstName);
-		student.setLastName(lastName);
 		try {
-			Controller.studentService.createStudent(student);
-			if (groupId != 0) {
-				Student newStudent = Controller.studentService.getLastStudent();
-				Group group = Controller.groupService.getGroupById(groupId);
-				Controller.groupService.addStudent(group, newStudent);
+			studentService.createStudent(firstName, lastName);
+			String groupId = request.getParameter("group");
+			if (!groupId.equals("0")) {
+				Student newStudent = studentService.getLastStudent();
+				groupService.addStudent(groupId, newStudent);
 			}
 		} catch (DAOException e) {
 			log.error(e.getMessage());

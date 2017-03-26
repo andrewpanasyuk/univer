@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.*;
+import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.service.ScheduleService;
+import com.andrewpanasyuk.service.TeacherService;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
+import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
+import com.andrewpanasyuk.service.serviceIF.TeacherServiceIF;
 import com.andrewpanasyuk.university.*;
 
 @WebServlet("/ScheduleUpdateServlet")
@@ -21,6 +26,9 @@ public class ScheduleUpdateServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ScheduleUpdateServlet.class);
+	private ScheduleServiceIF scheduleService = new ScheduleService();
+	private GroupServiceIF groupService = new GroupService();
+	private TeacherServiceIF teacherService = new TeacherService();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		procesRequest(request, response);
@@ -29,22 +37,19 @@ public class ScheduleUpdateServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Lesson lesson = Controller.scheduleService.getLessonByID(id);
 			String newLessonName = request.getParameter("subject");
-			Controller.scheduleService.updateName(lesson, newLessonName);
+			scheduleService.updateName(id, newLessonName);
 			
-			int auditorium = Integer.valueOf(request.getParameter("auditorium"));
-			Controller.scheduleService.updateAuditorium(lesson, auditorium);
+			String auditorium = request.getParameter("auditorium");
+			scheduleService.updateAuditorium(id, auditorium);
 			
-			int teacherId = Integer.valueOf(request.getParameter("teacher"));
-			Teacher teacher = Controller.teacherService.getTeacherByID(teacherId);
-			Controller.scheduleService.updateTeacher(lesson, teacher);
+			String teacherId = request.getParameter("teacher");
+			scheduleService.updateTeacher(id, teacherId);
 			
-			int groupId = Integer.valueOf(request.getParameter("group"));
-			Group group = Controller.groupService.getGroupById(groupId);
-			Controller.scheduleService.updateGroup(lesson, group);
+			String groupId = request.getParameter("group");
+			scheduleService.updateGroup(id, groupId);
 			
 		} catch (DAOException e) {
 			log.error(e.getMessage());
@@ -55,13 +60,13 @@ public class ScheduleUpdateServlet extends HttpServlet {
 	protected void procesRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException{
 		
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Lesson lesson = Controller.scheduleService.getLessonByID(id);
+			Lesson lesson = scheduleService.getLessonByID(id);
 			request.setAttribute("lesson", lesson);
-			List<Group> groups = Controller.groupService.getAllGroups();
+			List<Group> groups = groupService.getAllGroups();
 			request.setAttribute("groups", groups);
-			List<Teacher>teachers = Controller.teacherService.getAllTeachers();
+			List<Teacher>teachers = teacherService.getAllTeachers();
 			request.setAttribute("teachers", teachers);
 		} catch (DAOException e) {
 			log.error(e.getMessage());

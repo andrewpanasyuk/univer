@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.dao.daoIF.GroupDaoIF;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
-public class GroupDao implements GroupService{
+public class GroupDao implements GroupDaoIF{
 	private static final Logger log = Logger.getLogger(GroupDao.class);
 
 	@Override

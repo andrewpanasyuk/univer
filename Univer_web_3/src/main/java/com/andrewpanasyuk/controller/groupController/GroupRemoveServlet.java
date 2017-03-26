@@ -8,23 +8,24 @@ import javax.servlet.http.*;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.*;
-import com.andrewpanasyuk.university.Group;
+import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
 
 @WebServlet("/GroupRemoveServlet")
 public class GroupRemoveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(GroupRemoveServlet.class);
+	private static GroupServiceIF groupDB = new GroupService();
+
+
 
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Group group = Controller.groupService.getGroupById(id);
-			Controller.groupService.removeGroup(group);
-			log.info("Group removed");
+			groupDB.removeGroup(id);
 		} catch (DAOException e) {
 			log.error(e.getMessage());
 		}

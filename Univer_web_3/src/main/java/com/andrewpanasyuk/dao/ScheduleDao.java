@@ -13,12 +13,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.service.ScheduleService;
+import com.andrewpanasyuk.dao.daoIF.ScheduleDaoIF;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 import com.andrewpanasyuk.university.Teacher;
 
-public class ScheduleDao implements ScheduleService{
+public class ScheduleDao implements ScheduleDaoIF{
 	private static final Logger log = Logger.getLogger(ScheduleDao.class);
 
 	@Override

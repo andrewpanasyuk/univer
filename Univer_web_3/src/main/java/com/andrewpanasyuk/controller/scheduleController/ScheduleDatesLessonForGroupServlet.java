@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.service.ScheduleService;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
+import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 
@@ -21,16 +24,18 @@ import com.andrewpanasyuk.university.Lesson;
 public class ScheduleDatesLessonForGroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ScheduleDatesLessonForGroupServlet.class);
+	private ScheduleServiceIF scheduleService = new ScheduleService();
+	private GroupServiceIF groupService = new GroupService();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int groupId = Integer.valueOf(request.getParameter("id"));
+		String groupId = request.getParameter("id");
 		try {
-			Group group = Controller.groupService.getGroupById(groupId);
+			Group group = groupService.getGroupById(groupId);
 			String dateFrom = request.getParameter("dateFrom");
 			String dateTo = request.getParameter("dateTo");
-			List<Lesson> lessons = Controller.scheduleService.getGroupLessonsBetweenDates(
-					dateFrom, dateTo, group);
+			List<Lesson> lessons = scheduleService.getGroupLessonsBetweenDates(
+					dateFrom, dateTo, groupId);
 			request.setAttribute("lessons", lessons);
 			request.setAttribute("group", group);
 			RequestDispatcher dispatcher = request

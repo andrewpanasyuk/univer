@@ -3,23 +3,67 @@ package com.andrewpanasyuk.service;
 import java.util.List;
 
 import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.dao.GroupDao;
+import com.andrewpanasyuk.dao.daoIF.GroupDaoIF;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
-public interface GroupService {
+public class GroupService implements GroupServiceIF {
+	private GroupDaoIF groupDB = new GroupDao();
 
-	void addGroup(Group group) throws DAOException;
+	@Override
+	public void addGroup(String groupName) throws DAOException {
+		Group group = new Group();
+		group.setName(groupName);
+		groupDB.addGroup(group);
+		
+	}
 
-	void addStudent(Group group, Student student) throws DAOException;
+	@Override
+	public void addStudent(String groupID, Student student) throws DAOException {
+		int id = Integer.valueOf(groupID);
+		Group group = groupDB.getGroupById(id);
+		groupDB.addStudent(group, student);
+		
+	}
 
-	void removeGroup(Group group)throws DAOException;
+	@Override
+	public void removeGroup(String groupID) throws DAOException {
+		int id = Integer.valueOf(groupID);
+		Group group = groupDB.getGroupById(id);
+		groupDB.removeGroup(group);
+		
+	}
 
-	void renameGroup(Group group, String newName) throws DAOException;
+	@Override
+	public void renameGroup(String groupID, String newName) throws DAOException {
+		int id = Integer.valueOf(groupID);
+		Group group = groupDB.getGroupById(id);
+		groupDB.renameGroup(group, newName);
+		
+	}
 
-	Group getGroupById(int groupId) throws DAOException;
+	@Override
+	public Group getGroupById(String groupId) throws DAOException {
+		int id = Integer.valueOf(groupId);
+		Group group = groupDB.getGroupById(id);
+		return group;
+	}
 
-	List<Group> getAllGroups() throws DAOException;
+	@Override
+	public List<Group> getAllGroups() throws DAOException {
+		List<Group> groups = groupDB.getAllGroups();
+		return groups;
+	}
 
-	List<Student> getAllStudents(Group group) throws DAOException;
+	@Override
+	public List<Student> getAllStudents(String groupId) throws DAOException {
+		int id = Integer.valueOf(groupId);
+		Group group = groupDB.getGroupById(id);
+		List<Student> students = groupDB.getAllStudents(group);
+		return students;
+	}
+
 
 }

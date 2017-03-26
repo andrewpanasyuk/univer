@@ -10,10 +10,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.service.TeacherService;
+import com.andrewpanasyuk.dao.daoIF.TeacherDaoIF;
 import com.andrewpanasyuk.university.Teacher;
 
-public class TeacherDao implements TeacherService {
+public class TeacherDao implements TeacherDaoIF {
 	public static final Logger log = Logger.getLogger(TeacherDao.class);
 
 	@Override

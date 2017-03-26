@@ -10,14 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.controller.ControllerException;
+import com.andrewpanasyuk.service.ScheduleService;
+import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
 import com.andrewpanasyuk.university.Lesson;
 
 @WebServlet("/ScheduleShowServlet")
 public class ScheduleShowServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(ScheduleShowServlet.class);
 	private static final long serialVersionUID = 1L;
+	private ScheduleServiceIF scheduleService = new ScheduleService();
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -40,7 +42,7 @@ public class ScheduleShowServlet extends HttpServlet {
 	protected void procesRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ControllerException {
 		try {
-			List<Lesson> lessons = Controller.scheduleService.getAllLessons();
+			List<Lesson> lessons = scheduleService.getAllLessons();
 			request.setAttribute("lessons", lessons);
 			RequestDispatcher dispatcher = request
 					.getRequestDispatcher("/views/schedules.jsp");

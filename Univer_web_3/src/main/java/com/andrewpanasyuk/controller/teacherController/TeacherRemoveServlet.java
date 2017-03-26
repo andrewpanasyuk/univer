@@ -10,21 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.university.Teacher;
+import com.andrewpanasyuk.service.TeacherService;
+import com.andrewpanasyuk.service.serviceIF.TeacherServiceIF;
 
 @WebServlet("/TeacherRemoveServlet")
 public class TeacherRemoveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(TeacherRemoveServlet.class);
+	private TeacherServiceIF teacherService = new TeacherService();
+
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Teacher teacher = Controller.teacherService.getTeacherByID(id);
-			Controller.teacherService.removeTeacher(teacher);
+			teacherService.removeTeacher(id);
 		} catch (DAOException e) {
 			log.error(e.getMessage());
 		}

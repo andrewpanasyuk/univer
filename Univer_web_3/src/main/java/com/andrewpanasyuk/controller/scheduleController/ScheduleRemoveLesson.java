@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.university.Lesson;
+import com.andrewpanasyuk.service.ScheduleService;
+import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
 
 @WebServlet("/ScheduleRemoveLesson")
 public class ScheduleRemoveLesson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ScheduleRemoveLesson.class);
+	private ScheduleServiceIF scheduleService = new ScheduleService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Lesson lesson = Controller.scheduleService.getLessonByID(id);
-			Controller.scheduleService.removeLesson(lesson);
+			scheduleService.removeLesson(id);
 		} catch (DAOException e) {
 			log.error(e.getMessage());
 		}

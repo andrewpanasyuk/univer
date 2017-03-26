@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.service.StudentService;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
+import com.andrewpanasyuk.service.serviceIF.StudentServiceIF;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
@@ -21,12 +24,14 @@ import com.andrewpanasyuk.university.Student;
 public class StudentUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(StudentUpdateServlet.class);
+	private StudentServiceIF studentService = new StudentService();
+	private GroupServiceIF groupService = new GroupService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Student student = Controller.studentService.getStudentById(id);
-			List<Group>groups = Controller.groupService.getAllGroups();
+			Student student = studentService.getStudentById(id);
+			List<Group>groups = groupService.getAllGroups();
 			request.setAttribute("student", student);
 			request.setAttribute("groups", groups);
 			
@@ -38,16 +43,14 @@ public class StudentUpdateServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String studentId = request.getParameter("id");
 		String newFirstName = request.getParameter("first name");
 		String newLastName = request.getParameter("last name");
-		int groupId = Integer.valueOf(request.getParameter("group"));
+		String groupId = request.getParameter("group");
 		try {
-			Student student = Controller.studentService.getStudentById(id);
-			Group group = Controller.groupService.getGroupById(groupId);
-			Controller.studentService.updateStudentFirstName(student, newFirstName);
-			Controller.studentService.updateStudentLastName(student, newLastName);
-			Controller.studentService.updateGroup(student, group);
+			studentService.updateStudentFirstName(studentId, newFirstName);
+			studentService.updateStudentLastName(studentId, newLastName);
+			studentService.updateGroup(studentId, groupId);
 		} catch (DAOException e) {
 			log.error(e.getMessage());
 		}

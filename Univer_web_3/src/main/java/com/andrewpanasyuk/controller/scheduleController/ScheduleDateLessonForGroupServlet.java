@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.service.ScheduleService;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
+import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 
@@ -21,15 +24,17 @@ import com.andrewpanasyuk.university.Lesson;
 public class ScheduleDateLessonForGroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ScheduleDateLessonForGroupServlet.class);
+	private ScheduleServiceIF scheduleService = new ScheduleService();
+	private GroupServiceIF groupService = new GroupService();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int groupId = Integer.valueOf(request.getParameter("id"));
+		String groupId = request.getParameter("id");
 		try {
-			Group group = Controller.groupService.getGroupById(groupId);
+			Group group = groupService.getGroupById(groupId);
 			String date = request.getParameter("date");
-			List<Lesson> lessons = Controller.scheduleService.getGroupLessonsBetweenDates(
-					date, date, group);
+			List<Lesson> lessons = scheduleService.getGroupLessonsBetweenDates(
+					date, date, groupId);
 			request.setAttribute("lessons", lessons);
 			request.setAttribute("group", group);
 			RequestDispatcher dispatcher = request

@@ -12,8 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.service.ScheduleService;
+import com.andrewpanasyuk.service.TeacherService;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
+import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
+import com.andrewpanasyuk.service.serviceIF.TeacherServiceIF;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 import com.andrewpanasyuk.university.Teacher;
@@ -22,6 +27,9 @@ import com.andrewpanasyuk.university.Teacher;
 public class ScheduleUpdateTimeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ScheduleUpdateTimeServlet.class);
+	private ScheduleServiceIF scheduleService = new ScheduleService();
+	private GroupServiceIF groupService = new GroupService();
+	private TeacherServiceIF teacherService = new TeacherService();
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -33,13 +41,12 @@ public class ScheduleUpdateTimeServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Lesson lesson = Controller.scheduleService.getLessonByID(id);
 			String time = request.getParameter("date") + " "
 					+ request.getParameter("time");
-			Controller.scheduleService.updateDate(lesson, time);
-			List<Lesson> lessons = Controller.scheduleService.getAllLessons();
+			scheduleService.updateDate(id, time);
+			List<Lesson> lessons = scheduleService.getAllLessons();
 			request.setAttribute("lessons", lessons);
 
 		} catch (DAOException e1) {
@@ -53,13 +60,13 @@ public class ScheduleUpdateTimeServlet extends HttpServlet {
 	protected void procesRequest(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Lesson lesson = Controller.scheduleService.getLessonByID(id);
+			Lesson lesson = scheduleService.getLessonByID(id);
 			request.setAttribute("lesson", lesson);
-			List<Group> groups = Controller.groupService.getAllGroups();
+			List<Group> groups = groupService.getAllGroups();
 			request.setAttribute("groups", groups);
-			List<Teacher> teachers = Controller.teacherService.getAllTeachers();
+			List<Teacher> teachers = teacherService.getAllTeachers();
 			request.setAttribute("teachers", teachers);
 		} catch (DAOException e) {
 			log.error(e.getMessage());

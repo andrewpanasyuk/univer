@@ -9,20 +9,23 @@ import javax.servlet.http.*;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.*;
+import com.andrewpanasyuk.service.GroupService;
+import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
 import com.andrewpanasyuk.university.Group;
 
 @WebServlet("/GroupUpdateServlet")
 public class GroupUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(GroupUpdateServlet.class);
+	private static GroupServiceIF groupDB = new GroupService();
+
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		try {
-			Group group = Controller.groupService.getGroupById(id);
+			Group group = groupDB.getGroupById(id);
 			request.setAttribute("group", group);
 		} catch (DAOException e) {
 			log.error(e.getMessage());
@@ -35,11 +38,10 @@ public class GroupUpdateServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.valueOf(request.getParameter("id"));
+		String id = request.getParameter("id");
 		String newName = request.getParameter("name");
 		try {
-			Group group = Controller.groupService.getGroupById(id);
-			Controller.groupService.renameGroup(group, newName);
+			groupDB.renameGroup(id, newName);
 		} catch (DAOException e) {
 			log.error(e.getMessage());
 		}

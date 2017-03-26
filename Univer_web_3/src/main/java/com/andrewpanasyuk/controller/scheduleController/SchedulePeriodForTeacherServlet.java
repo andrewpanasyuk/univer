@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.controller.Controller;
 import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.service.ScheduleService;
+import com.andrewpanasyuk.service.TeacherService;
+import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
+import com.andrewpanasyuk.service.serviceIF.TeacherServiceIF;
 import com.andrewpanasyuk.university.Lesson;
 import com.andrewpanasyuk.university.Teacher;
 
@@ -21,15 +24,17 @@ import com.andrewpanasyuk.university.Teacher;
 public class SchedulePeriodForTeacherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(SchedulePeriodForTeacherServlet.class);
+	private ScheduleServiceIF scheduleService = new ScheduleService();
+	private TeacherServiceIF teacherService = new TeacherService();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int teacherId = Integer.valueOf(request.getParameter("id"));
+		String teacherId = request.getParameter("id");
 		try {
-			Teacher teacher = Controller.teacherService.getTeacherByID(teacherId);
+			Teacher teacher = teacherService.getTeacherByID(teacherId);
 			String date = request.getParameter("date");
-			List<Lesson> lessons = Controller.scheduleService.getTeacherLessonsBetweenDates(
-					date, date, teacher);
+			List<Lesson> lessons = scheduleService.getTeacherLessonsBetweenDates(
+					date, date, teacherId);
 			request.setAttribute("lessons", lessons);
 			request.setAttribute("teacher", teacher);
 			RequestDispatcher dispatcher = request
