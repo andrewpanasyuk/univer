@@ -25,12 +25,13 @@ All teachers:<br>
 				<td>${teacher.id}</td>
 				<td>${teacher.firstName}</td>
 				<td>${teacher.lastName}</td>
-				<td><a href="${pageContext.servletContext.contextPath}/ScheduleForTeacherServlet?id=${teacher.id}">Schedule</a></td>
-				<td><a href="${pageContext.servletContext.contextPath}/TeacherUpdateServlet?id=${teacher.id}">Update</a></td>
-				<td><a href="${pageContext.servletContext.contextPath}/TeacherRemoveServlet?id=${teacher.id}">Remove</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/Lessons/teacher?id=${teacher.id}">Schedule</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/Teacher/update?id=${teacher.id}">Update</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/TeacherRemove?id=${teacher.id}">Remove</a></td>
 				
 			</tr>
 		</c:forEach>
 	</table>
+	<a href="${pageContext.servletContext.contextPath}/index.jsp"> <b>Home page</b></a><br>
 </body>
 </html>

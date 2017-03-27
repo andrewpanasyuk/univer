@@ -9,7 +9,7 @@
 </head>
 <body>
 	<form
-		action="${pageContext.servletContext.contextPath}/StudentUpdateServlet"
+		action="${pageContext.servletContext.contextPath}/Student/update"
 		method="post">
 		<p>
 			Student ID: <input type="hidden" name="id" value="${student.id}">${student.id}</p>

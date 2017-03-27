@@ -11,11 +11,9 @@
 </head>
 <body>
 	<form
-		action="${pageContext.servletContext.contextPath}/ScheduleUpdateServlet"
+		action="${pageContext.servletContext.contextPath}/Lesson/update"
 		method="post">
-		<p>
 		<h2>Update information about Lesson</h2>
-		</p>
 		<p>
 			<input type="hidden" name="id" value="${lesson.id}">
 		</p>
@@ -47,7 +45,7 @@
 		<input type="submit" value="update lesson">
 	</form>
 	<form
-		action="${pageContext.servletContext.contextPath}/ScheduleUpdateTimeServlet"
+		action="${pageContext.servletContext.contextPath}/Lesson/updateTime"
 		method="post">
 		<p>
 			<input type="hidden" name="id" value="${lesson.id}">

@@ -8,7 +8,7 @@
 </head>
 <body>
 	<form
-		action="${pageContext.servletContext.contextPath}/GroupCreateServlet" method="post">
+		action="${pageContext.servletContext.contextPath}/Group/add" method="post">
 		<p>Group name: <input type="text" name="group name" size="40"> </p>
 		<p><input type="submit" value="create Group"></p>
 

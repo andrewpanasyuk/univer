@@ -16,7 +16,7 @@
 			<th>First name</th>
 			<th>Last name</th>
 		</tr>
-		<c:forEach items="${group.students}" var="student">
+		<c:forEach items="${students}" var="student">
 			<tr>
 				<td>${student.id}</td>
 				<td>${student.firstName}</td>
@@ -25,6 +25,6 @@
 			</tr>
 		</c:forEach>
 	</table>
-
+<a href="${pageContext.servletContext.contextPath}/index.jsp"> <b>Home page</b></a><br>
 </body>
 </html>

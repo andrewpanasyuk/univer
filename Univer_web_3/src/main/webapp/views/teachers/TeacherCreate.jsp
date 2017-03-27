@@ -8,7 +8,7 @@
 </head>
 <body>
 	<form
-		action="${pageContext.servletContext.contextPath }/TeacherCreateServlet"
+		action="${pageContext.servletContext.contextPath }/Teacher/add"
 		method="post">
 		New Teacher <br>
 		<p>

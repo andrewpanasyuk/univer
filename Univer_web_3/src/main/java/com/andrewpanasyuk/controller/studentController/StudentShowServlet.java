@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.controller.ControllerException;
-import com.andrewpanasyuk.service.StudentService;
-import com.andrewpanasyuk.service.serviceIF.StudentServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.StudentServiceImpl;
+import com.andrewpanasyuk.service.services.StudentService;
 import com.andrewpanasyuk.university.Student;
 
-@WebServlet("/StudentShowServlet")
+@WebServlet("/Students")
 public class StudentShowServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger
 			.getLogger(StudentShowServlet.class);
-	private StudentServiceIF studentService = new StudentService();
+	private StudentService studentService = new StudentServiceImpl();
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) {

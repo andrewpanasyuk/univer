@@ -13,23 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.service.GroupService;
-import com.andrewpanasyuk.service.ScheduleService;
-import com.andrewpanasyuk.service.TeacherService;
-import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
-import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
-import com.andrewpanasyuk.service.serviceIF.TeacherServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.GroupServiceImpl;
+import com.andrewpanasyuk.service.serviceImpl.ScheduleServiceImpl;
+import com.andrewpanasyuk.service.serviceImpl.TeacherServiceImpl;
+import com.andrewpanasyuk.service.services.GroupService;
+import com.andrewpanasyuk.service.services.ScheduleService;
+import com.andrewpanasyuk.service.services.TeacherService;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 import com.andrewpanasyuk.university.Teacher;
 
-@WebServlet("/ScheduleUpdateTimeServlet")
+@WebServlet("/Lesson/updateTime")
 public class ScheduleUpdateTimeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ScheduleUpdateTimeServlet.class);
-	private ScheduleServiceIF scheduleService = new ScheduleService();
-	private GroupServiceIF groupService = new GroupService();
-	private TeacherServiceIF teacherService = new TeacherService();
+	private ScheduleService scheduleService = new ScheduleServiceImpl();
+	private GroupService groupService = new GroupServiceImpl();
+	private TeacherService teacherService = new TeacherServiceImpl();
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -54,7 +54,7 @@ public class ScheduleUpdateTimeServlet extends HttpServlet {
 		}
 
 		procesRequest(request, response);
-		response.sendRedirect(request.getContextPath() + "/ScheduleShowServlet");
+		response.sendRedirect(request.getContextPath() + "/Lessons");
 	}
 
 	protected void procesRequest(HttpServletRequest request,

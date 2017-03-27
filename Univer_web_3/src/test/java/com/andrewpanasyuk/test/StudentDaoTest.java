@@ -6,12 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.StudentDao;
+import com.andrewpanasyuk.dao.daoImpl.StudentDaoImpl;
 import com.andrewpanasyuk.university.Student;
 
 public class StudentDaoTest {
 	private Student student;
-	private StudentDao studentDao = new StudentDao();
+	private StudentDaoImpl studentDao = new StudentDaoImpl();
 	
 	@Before
 	public void createTestData() {
@@ -50,7 +50,7 @@ public class StudentDaoTest {
 
 	@Test
 	public void testRenameStudentFirstName() {
-		StudentDao studentsDao = new StudentDao();
+		StudentDaoImpl studentsDao = new StudentDaoImpl();
 		try {
 			studentsDao.createStudent(student);
 			Student lastAddStudent = studentsDao.getLastStudent();
@@ -67,7 +67,7 @@ public class StudentDaoTest {
 
 	@Test
 	public void testRenameStudentLastName() {
-		StudentDao studentsDao = new StudentDao();
+		StudentDaoImpl studentsDao = new StudentDaoImpl();
 		try {
 			studentsDao.createStudent(student);
 			Student lastAddStudent = studentsDao.getLastStudent();

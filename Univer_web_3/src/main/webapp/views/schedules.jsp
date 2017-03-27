@@ -12,18 +12,18 @@
 <body>
 	All lessons:
 	<br>
-	<a href="${pageContext.servletContext.contextPath}/ScheduleAddLesson">add
+	<a href="${pageContext.servletContext.contextPath}/Lesson/add">add
 		new Lesson</a>
 	<br>
 	<form
-		action="${pageContext.servletContext.contextPath }/ScheduleDateServlet"
+		action="${pageContext.servletContext.contextPath }/Lesson/date"
 		method="post">
 		<p>
 			Show lessons on <input type="date" name="date"> <input
 				type="submit" value="select">
 		</p>
 	</form>
-	<form action="${pageContext.servletContext.contextPath }/SchedulePeriodServlet" method="post">
+	<form action="${pageContext.servletContext.contextPath }/Lessons/period" method="post">
 		<p>
 			Show schedule from <input type="date" name="dateFrom"> to <input
 				type="date" name="dateTo"> <input type="submit"
@@ -55,12 +55,13 @@
 				<td>${lesson.teacher.lastName}</td>
 				<td>${lesson.group.name}</td>
 				<td><a
-					href="${pageContext.servletContext.contextPath}/ScheduleUpdateServlet?id=${lesson.id}">Update</a></td>
+					href="${pageContext.servletContext.contextPath}/Lesson/update?id=${lesson.id}">Update</a></td>
 				<td><a
-					href="${pageContext.servletContext.contextPath}/ScheduleRemoveLesson?id=${lesson.id}">Remove</a></td>
+					href="${pageContext.servletContext.contextPath}/RemoveLesson?id=${lesson.id}">Remove</a></td>
 
 			</tr>
 		</c:forEach>
 	</table>
+	<a href="${pageContext.servletContext.contextPath}/index.jsp"> <b>Home page</b></a><br>
 </body>
 </html>

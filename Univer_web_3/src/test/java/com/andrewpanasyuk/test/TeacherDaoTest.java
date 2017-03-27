@@ -6,12 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.TeacherDao;
+import com.andrewpanasyuk.dao.daoImpl.TeacherDaoImpl;
 import com.andrewpanasyuk.university.Teacher;
 
 public class TeacherDaoTest {
 	private Teacher teacher;
-	private TeacherDao teacherDao = new TeacherDao();
+	private TeacherDaoImpl teacherDao = new TeacherDaoImpl();
 
 	@Before
 	public void createTestData() {

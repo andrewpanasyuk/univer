@@ -1,11 +1,11 @@
-package com.andrewpanasyuk.service.serviceIF;
+package com.andrewpanasyuk.service.services;
 
 import java.util.List;
 
 import com.andrewpanasyuk.dao.DAOException;
 import com.andrewpanasyuk.university.Student;
 
-public interface StudentServiceIF {
+public interface StudentService {
 	void createStudent(String firstName, String lastName) throws DAOException;
 
 	void removeStudent(String studentID) throws DAOException;

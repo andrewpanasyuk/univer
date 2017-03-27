@@ -1,4 +1,4 @@
-package com.andrewpanasyuk.service;
+package com.andrewpanasyuk.service.serviceImpl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.TreeMap;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.GroupDao;
-import com.andrewpanasyuk.dao.ScheduleDao;
-import com.andrewpanasyuk.dao.TeacherDao;
-import com.andrewpanasyuk.dao.daoIF.GroupDaoIF;
-import com.andrewpanasyuk.dao.daoIF.ScheduleDaoIF;
-import com.andrewpanasyuk.dao.daoIF.TeacherDaoIF;
-import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
+import com.andrewpanasyuk.dao.daoImpl.GroupDaoImpl;
+import com.andrewpanasyuk.dao.daoImpl.ScheduleDaoImpl;
+import com.andrewpanasyuk.dao.daoImpl.TeacherDaoImpl;
+import com.andrewpanasyuk.dao.daoService.GroupDao;
+import com.andrewpanasyuk.dao.daoService.ScheduleDao;
+import com.andrewpanasyuk.dao.daoService.TeacherDao;
+import com.andrewpanasyuk.service.services.ScheduleService;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 import com.andrewpanasyuk.university.Teacher;
 
-public class ScheduleService implements ScheduleServiceIF {
-	private ScheduleDaoIF scheduleDB = new ScheduleDao();
-	private GroupDaoIF groupDB = new GroupDao();
-	private TeacherDaoIF teacherDB = new TeacherDao();
+public class ScheduleServiceImpl implements ScheduleService {
+	private ScheduleDao scheduleDB = new ScheduleDaoImpl();
+	private GroupDao groupDB = new GroupDaoImpl();
+	private TeacherDao teacherDB = new TeacherDaoImpl();
 
 	@Override
 	public void addLesson(TreeMap<String, String> lessonData) throws DAOException {

@@ -1,4 +1,4 @@
-package com.andrewpanasyuk.service.serviceIF;
+package com.andrewpanasyuk.service.services;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -6,7 +6,7 @@ import java.util.TreeMap;
 import com.andrewpanasyuk.dao.DAOException;
 import com.andrewpanasyuk.university.Lesson;
 
-public interface ScheduleServiceIF {
+public interface ScheduleService {
 
 	void addLesson(TreeMap<String, String> lesson) throws DAOException;
 

@@ -7,13 +7,14 @@ import java.util.Date;
 
 
 
+
 import org.junit.Before;
 import org.junit.Test;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.GroupDao;
-import com.andrewpanasyuk.dao.ScheduleDao;
-import com.andrewpanasyuk.dao.TeacherDao;
+import com.andrewpanasyuk.dao.daoImpl.GroupDaoImpl;
+import com.andrewpanasyuk.dao.daoImpl.ScheduleDaoImpl;
+import com.andrewpanasyuk.dao.daoImpl.TeacherDaoImpl;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 import com.andrewpanasyuk.university.Teacher;
@@ -25,9 +26,9 @@ public class ScheduleDaoTest {
 	private Lesson lesson = new Lesson();
 	private Teacher teacher = new Teacher();
 	private Teacher teacher1 = new Teacher();
-	private GroupDao groupDao = new GroupDao();
-	private ScheduleDao scheduleDao = new ScheduleDao();
-	private TeacherDao teacherDao = new TeacherDao();
+	private GroupDaoImpl groupDao = new GroupDaoImpl();
+	private ScheduleDaoImpl scheduleDao = new ScheduleDaoImpl();
+	private TeacherDaoImpl teacherDao = new TeacherDaoImpl();
 
 	@Before
 	public void createTestData() {

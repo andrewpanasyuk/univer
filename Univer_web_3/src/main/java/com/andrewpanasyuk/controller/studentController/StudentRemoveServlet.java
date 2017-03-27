@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.service.StudentService;
-import com.andrewpanasyuk.service.serviceIF.StudentServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.StudentServiceImpl;
+import com.andrewpanasyuk.service.services.StudentService;
 
-@WebServlet("/StudentRemoveServlet")
+@WebServlet("/StudentRemove")
 public class StudentRemoveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(StudentRemoveServlet.class);
-	private StudentServiceIF studentService = new StudentService();
+	private StudentService studentService = new StudentServiceImpl();
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +28,7 @@ public class StudentRemoveServlet extends HttpServlet {
 		} catch (DAOException e) {
 			log.error(e.getMessage());
 		}
-		response.sendRedirect(request.getContextPath() + "/StudentShowServlet");
+		response.sendRedirect(request.getContextPath() + "/Students");
 	}
 
 }

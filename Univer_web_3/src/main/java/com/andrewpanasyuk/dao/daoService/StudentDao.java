@@ -1,4 +1,4 @@
-package com.andrewpanasyuk.dao.daoIF;
+package com.andrewpanasyuk.dao.daoService;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.andrewpanasyuk.dao.DAOException;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
-public interface StudentDaoIF {
+public interface StudentDao {
 	void createStudent(Student student) throws DAOException;
 
 	void removeStudent(Student student) throws DAOException;

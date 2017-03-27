@@ -6,16 +6,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.GroupDao;
-import com.andrewpanasyuk.dao.StudentDao;
+import com.andrewpanasyuk.dao.daoImpl.GroupDaoImpl;
+import com.andrewpanasyuk.dao.daoImpl.StudentDaoImpl;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
 public class GroupDaoTest {
 	private Group group;
 	private Student student;
-	private GroupDao groupDao = new GroupDao();
-	private StudentDao studentDao = new StudentDao();
+	private GroupDaoImpl groupDao = new GroupDaoImpl();
+	private StudentDaoImpl studentDao = new StudentDaoImpl();
 
 	
 	@Before

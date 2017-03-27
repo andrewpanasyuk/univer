@@ -8,17 +8,24 @@
 <title>Index</title>
 </head>
 <body>
-	<a href="${pageContext.servletContext.contextPath}/GroupShowServlet">Show
+	<a href="${pageContext.servletContext.contextPath}/Groups">Show
 		all groups</a>
 	<br>
-	<a href="${pageContext.servletContext.contextPath}/StudentShowServlet">Show
+	<a href="${pageContext.servletContext.contextPath}/Students">Show
 		all students</a>
 	<br>
-	<a href="${pageContext.servletContext.contextPath}/TeacherShowServlet">Show
+	<a href="${pageContext.servletContext.contextPath}/Teachers">Show
 		all teachers</a>
 	<br>
-	<a href="${pageContext.servletContext.contextPath}/ScheduleShowServlet">Show
+	<a href="${pageContext.servletContext.contextPath}/Lessons">Show
 		all lessons</a>
 	<br>
+	<hr>
+ <a href="${pageContext.servletContext.contextPath}/views/groups/GroupCreate.jsp"> Create new Group</a><br>
+	<a href="${pageContext.servletContext.contextPath}/Student/add">Create Student</a><br>
+	<a href="${pageContext.servletContext.contextPath}/views/teachers/TeacherCreate.jsp">Create new Teacher</a><br>
+	<a href="${pageContext.servletContext.contextPath}/Lesson/add">add
+		new Lesson</a><br>
+  <hr>
 </body>
 </html>

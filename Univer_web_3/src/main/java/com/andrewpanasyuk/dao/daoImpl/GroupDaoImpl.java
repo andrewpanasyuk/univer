@@ -1,4 +1,4 @@
-package com.andrewpanasyuk.dao;
+package com.andrewpanasyuk.dao.daoImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,14 +10,19 @@ import java.util.List;
 
 
 
+
+
+
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.dao.daoIF.GroupDaoIF;
+import com.andrewpanasyuk.dao.ConnectionFactory;
+import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.dao.daoService.GroupDao;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
-public class GroupDao implements GroupDaoIF{
-	private static final Logger log = Logger.getLogger(GroupDao.class);
+public class GroupDaoImpl implements GroupDao{
+	private static final Logger log = Logger.getLogger(GroupDaoImpl.class);
 
 	@Override
 	public void addGroup(Group group) throws DAOException{

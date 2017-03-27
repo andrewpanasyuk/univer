@@ -8,7 +8,7 @@
 </head>
 <body>
 	<form
-		action="${pageContext.servletContext.contextPath}/TeacherUpdateServlet"
+		action="${pageContext.servletContext.contextPath}/Teacher/update"
 		method="post">
 		<p>
 			Teacher ID: <input type="hidden" name="id" value="${teacher.id}"> ${teacher.id}</p>

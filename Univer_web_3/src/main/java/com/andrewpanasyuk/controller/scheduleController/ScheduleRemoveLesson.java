@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.service.ScheduleService;
-import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.ScheduleServiceImpl;
+import com.andrewpanasyuk.service.services.ScheduleService;
 
-@WebServlet("/ScheduleRemoveLesson")
+@WebServlet("/RemoveLesson")
 public class ScheduleRemoveLesson extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ScheduleRemoveLesson.class);
-	private ScheduleServiceIF scheduleService = new ScheduleService();
+	private ScheduleService scheduleService = new ScheduleServiceImpl();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
@@ -27,7 +27,7 @@ public class ScheduleRemoveLesson extends HttpServlet {
 		} catch (DAOException e) {
 			log.error(e.getMessage());
 		}
-		response.sendRedirect(request.getContextPath() + "/ScheduleShowServlet");
+		response.sendRedirect(request.getContextPath() + "/Lessons");
 	}
 
 }

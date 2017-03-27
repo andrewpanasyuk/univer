@@ -9,14 +9,14 @@ import javax.servlet.http.*;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.service.GroupService;
-import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.GroupServiceImpl;
+import com.andrewpanasyuk.service.services.GroupService;
 
-@WebServlet("/GroupCreateServlet")
+@WebServlet("/Group/add")
 public class GroupCreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(GroupCreateServlet.class);
-	private GroupServiceIF groupService = new GroupService();
+	private GroupService groupService = new GroupServiceImpl();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -27,7 +27,7 @@ public class GroupCreateServlet extends HttpServlet {
 		} catch (DAOException e) {
 			log.error(e.getMessage());
 		}
-			response.sendRedirect(request.getContextPath() + "/GroupShowServlet");
+			response.sendRedirect(request.getContextPath() + "/Groups");
 
 	}
 

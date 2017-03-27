@@ -11,15 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.controller.ControllerException;
-import com.andrewpanasyuk.service.ScheduleService;
-import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.ScheduleServiceImpl;
+import com.andrewpanasyuk.service.services.ScheduleService;
 import com.andrewpanasyuk.university.Lesson;
 
-@WebServlet("/ScheduleShowServlet")
+@WebServlet("/Lessons")
 public class ScheduleShowServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(ScheduleShowServlet.class);
 	private static final long serialVersionUID = 1L;
-	private ScheduleServiceIF scheduleService = new ScheduleService();
+	private ScheduleService scheduleService = new ScheduleServiceImpl();
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) {

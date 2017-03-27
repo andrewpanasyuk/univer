@@ -1,4 +1,4 @@
-package com.andrewpanasyuk.service.serviceIF;
+package com.andrewpanasyuk.service.services;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.andrewpanasyuk.dao.DAOException;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
-public interface GroupServiceIF {
+public interface GroupService {
 
 	void addGroup(String groupName) throws DAOException;
 

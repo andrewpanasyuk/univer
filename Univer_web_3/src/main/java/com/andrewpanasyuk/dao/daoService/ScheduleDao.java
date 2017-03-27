@@ -1,4 +1,4 @@
-package com.andrewpanasyuk.dao.daoIF;
+package com.andrewpanasyuk.dao.daoService;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 import com.andrewpanasyuk.university.Teacher;
 
-public interface ScheduleDaoIF {
+public interface ScheduleDao {
 
 	void addLesson(Lesson lesson) throws DAOException;
 

@@ -13,15 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.service.ScheduleService;
-import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.ScheduleServiceImpl;
+import com.andrewpanasyuk.service.services.ScheduleService;
 import com.andrewpanasyuk.university.Lesson;
 
-@WebServlet("/ScheduleDateServlet")
+@WebServlet("/Lessons/date")
 public class ScheduleDateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ScheduleDateServlet.class);
-	private ScheduleServiceIF scheduleService = new ScheduleService();
+	private ScheduleService scheduleService = new ScheduleServiceImpl();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

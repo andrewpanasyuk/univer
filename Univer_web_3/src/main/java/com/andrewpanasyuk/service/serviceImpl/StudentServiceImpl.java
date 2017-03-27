@@ -1,18 +1,18 @@
-package com.andrewpanasyuk.service;
+package com.andrewpanasyuk.service.serviceImpl;
 
 import java.util.List;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.GroupDao;
-import com.andrewpanasyuk.dao.StudentDao;
-import com.andrewpanasyuk.dao.daoIF.GroupDaoIF;
-import com.andrewpanasyuk.dao.daoIF.StudentDaoIF;
-import com.andrewpanasyuk.service.serviceIF.StudentServiceIF;
+import com.andrewpanasyuk.dao.daoImpl.GroupDaoImpl;
+import com.andrewpanasyuk.dao.daoImpl.StudentDaoImpl;
+import com.andrewpanasyuk.dao.daoService.GroupDao;
+import com.andrewpanasyuk.dao.daoService.StudentDao;
+import com.andrewpanasyuk.service.services.StudentService;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
-public class StudentService implements StudentServiceIF{
-	private StudentDaoIF studentDB = new StudentDao();
+public class StudentServiceImpl implements StudentService{
+	private StudentDao studentDB = new StudentDaoImpl();
 
 	@Override
 	public void createStudent(String firstName, String lastName) throws DAOException {
@@ -34,8 +34,9 @@ public class StudentService implements StudentServiceIF{
 		int student_id = Integer.valueOf(studentID);
 		int group_id = Integer.valueOf(groupID);
 		Student student = studentDB.getStudentById(student_id);
-		GroupDaoIF groupDB = new GroupDao();
+		GroupDao groupDB = new GroupDaoImpl();
 		Group group = groupDB.getGroupById(group_id);
+//		group.addStudent(student);
 		studentDB.updateGroup(student, group);
 	}
 

@@ -19,9 +19,9 @@
 
 </head>
 <body>
-	<p>hi!!</p>
+	
 	<form
-		action="${pageContext.servletContext.contextPath }/ScheduleAddLesson"
+		action="${pageContext.servletContext.contextPath }/Lesson/add"
 		method="post">
 		<p>
 			Subject: <input type="text" name="subject">

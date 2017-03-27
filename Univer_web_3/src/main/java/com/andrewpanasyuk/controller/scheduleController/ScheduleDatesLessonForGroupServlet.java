@@ -13,19 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.service.GroupService;
-import com.andrewpanasyuk.service.ScheduleService;
-import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
-import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.GroupServiceImpl;
+import com.andrewpanasyuk.service.serviceImpl.ScheduleServiceImpl;
+import com.andrewpanasyuk.service.services.GroupService;
+import com.andrewpanasyuk.service.services.ScheduleService;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Lesson;
 
-@WebServlet("/ScheduleDatesLessonForGroupServlet")
+@WebServlet("/Lessons/Group/period")
 public class ScheduleDatesLessonForGroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ScheduleDatesLessonForGroupServlet.class);
-	private ScheduleServiceIF scheduleService = new ScheduleService();
-	private GroupServiceIF groupService = new GroupService();
+	private ScheduleService scheduleService = new ScheduleServiceImpl();
+	private GroupService groupService = new GroupServiceImpl();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

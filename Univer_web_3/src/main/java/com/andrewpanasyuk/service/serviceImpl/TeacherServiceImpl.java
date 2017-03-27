@@ -1,15 +1,15 @@
-package com.andrewpanasyuk.service;
+package com.andrewpanasyuk.service.serviceImpl;
 
 import java.util.List;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.TeacherDao;
-import com.andrewpanasyuk.dao.daoIF.TeacherDaoIF;
-import com.andrewpanasyuk.service.serviceIF.TeacherServiceIF;
+import com.andrewpanasyuk.dao.daoImpl.TeacherDaoImpl;
+import com.andrewpanasyuk.dao.daoService.TeacherDao;
+import com.andrewpanasyuk.service.services.TeacherService;
 import com.andrewpanasyuk.university.Teacher;
 
-public class TeacherService implements TeacherServiceIF {
-	private TeacherDaoIF teacherDB = new TeacherDao();
+public class TeacherServiceImpl implements TeacherService {
+	private TeacherDao teacherDB = new TeacherDaoImpl();
 
 	@Override
 	public void createTeacher(String firstName, String lastName) throws DAOException {

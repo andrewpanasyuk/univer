@@ -13,29 +13,28 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.service.ScheduleService;
-import com.andrewpanasyuk.service.TeacherService;
-import com.andrewpanasyuk.service.serviceIF.ScheduleServiceIF;
-import com.andrewpanasyuk.service.serviceIF.TeacherServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.ScheduleServiceImpl;
+import com.andrewpanasyuk.service.serviceImpl.TeacherServiceImpl;
+import com.andrewpanasyuk.service.services.ScheduleService;
+import com.andrewpanasyuk.service.services.TeacherService;
 import com.andrewpanasyuk.university.Lesson;
 import com.andrewpanasyuk.university.Teacher;
 
-@WebServlet("/LessonsByPeriodForTeacher")
-public class ScheduleDateLessonForTeacherServlet extends HttpServlet {
+@WebServlet("/Lessons/Teacher/date")
+public class ScheduleDateForTeacherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(ScheduleDateLessonForTeacherServlet.class);
-	private ScheduleServiceIF scheduleService = new ScheduleService();
-	private TeacherServiceIF teacherService = new TeacherService();
+	private static final Logger log = Logger.getLogger(ScheduleDateForTeacherServlet.class);
+	private ScheduleService scheduleService = new ScheduleServiceImpl();
+	private TeacherService teacherService = new TeacherServiceImpl();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String teacherId = request.getParameter("id");
 		try {
 			Teacher teacher = teacherService.getTeacherByID(teacherId);
-			String dateFrom = request.getParameter("dateFrom");
-			String dateTo = request.getParameter("dateTo");
+			String date = request.getParameter("date");
 			List<Lesson> lessons = scheduleService.getTeacherLessonsBetweenDates(
-					dateFrom, dateTo, teacherId);
+					date, date, teacherId);
 			request.setAttribute("lessons", lessons);
 			request.setAttribute("teacher", teacher);
 			RequestDispatcher dispatcher = request

@@ -1,16 +1,16 @@
-package com.andrewpanasyuk.service;
+package com.andrewpanasyuk.service.serviceImpl;
 
 import java.util.List;
 
 import com.andrewpanasyuk.dao.DAOException;
-import com.andrewpanasyuk.dao.GroupDao;
-import com.andrewpanasyuk.dao.daoIF.GroupDaoIF;
-import com.andrewpanasyuk.service.serviceIF.GroupServiceIF;
+import com.andrewpanasyuk.dao.daoImpl.GroupDaoImpl;
+import com.andrewpanasyuk.dao.daoService.GroupDao;
+import com.andrewpanasyuk.service.services.GroupService;
 import com.andrewpanasyuk.university.Group;
 import com.andrewpanasyuk.university.Student;
 
-public class GroupService implements GroupServiceIF {
-	private GroupDaoIF groupDB = new GroupDao();
+public class GroupServiceImpl implements GroupService {
+	private GroupDao groupDB = new GroupDaoImpl();
 
 	@Override
 	public void addGroup(String groupName) throws DAOException {

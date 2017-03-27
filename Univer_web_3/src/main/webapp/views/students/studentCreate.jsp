@@ -9,7 +9,7 @@
 </head>
 <body>
 	<form
-		action="${pageContext.servletContext.contextPath}/StudentAddServlet"
+		action="${pageContext.servletContext.contextPath}/Student/add"
 		method="post">
 		<p>
 			First name: <input type="text" name="first name" size="40">

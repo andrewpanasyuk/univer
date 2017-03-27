@@ -8,7 +8,7 @@
 </head>
 <body>
 	<form
-		action="${pageContext.servletContext.contextPath}/GroupUpdateServlet"
+		action="${pageContext.servletContext.contextPath}/Group/update"
 		method="post">
 		<p>
 			Group ID: <input type="hidden" name="id" value="${group.id }">

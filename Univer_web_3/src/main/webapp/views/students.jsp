@@ -10,7 +10,7 @@
 <body>
 	All students:
 	<br>
-	<a href="${pageContext.servletContext.contextPath}/StudentAddServlet">Create Student</a>
+	<a href="${pageContext.servletContext.contextPath}/Student/add">Create Student</a>
 	<br>
 	<table border="1">
 		<tr>
@@ -27,12 +27,12 @@
 				<td>${student.firstName}</td>
 				<td>${student.lastName}</td>
 				<td>${student.group.name}</td>
-				<td><a href="${pageContext.servletContext.contextPath}/StudentUpdateServlet?id=${student.id}">Update</a></td>
-				<td><a href="${pageContext.servletContext.contextPath}/StudentRemoveServlet?id=${student.id}">Remove</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/Student/update?id=${student.id}">Update</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/StudentRemove?id=${student.id}">Remove</a></td>
 				
 			</tr>
 		</c:forEach>
 	</table>
-	
+	<a href="${pageContext.servletContext.contextPath}/index.jsp"> <b>Home page</b></a><br>
 </body>
 </html>

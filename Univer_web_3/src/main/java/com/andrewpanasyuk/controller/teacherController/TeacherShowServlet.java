@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.andrewpanasyuk.controller.ControllerException;
-import com.andrewpanasyuk.service.TeacherService;
-import com.andrewpanasyuk.service.serviceIF.TeacherServiceIF;
+import com.andrewpanasyuk.service.serviceImpl.TeacherServiceImpl;
+import com.andrewpanasyuk.service.services.TeacherService;
 import com.andrewpanasyuk.university.Teacher;
 
-@WebServlet("/TeacherShowServlet")
+@WebServlet("/Teachers")
 public class TeacherShowServlet extends HttpServlet {
 
 	private static final Logger log = Logger
 			.getLogger(TeacherShowServlet.class);
 	private static final long serialVersionUID = 1L;
-	private TeacherServiceIF teacherService = new TeacherService();
+	private TeacherService teacherService = new TeacherServiceImpl();
 
 
 	protected void doGet(HttpServletRequest request,

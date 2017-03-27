@@ -10,7 +10,7 @@
 </head>
 <body>
 	<form
-		action="${pageContext.servletContext.contextPath }/ScheduleDateLessonForGroup"
+		action="${pageContext.servletContext.contextPath }/Lessons/Group/date"
 		method="post">
 		<input type="hidden" name="id" value="${group.id}">
 		<p>
@@ -23,7 +23,7 @@
 	</form>
 
 	<form
-		action="${pageContext.servletContext.contextPath }/ScheduleDatesLessonForGroupServlet"
+		action="${pageContext.servletContext.contextPath }/Lessons/Group/period"
 		method="post">
 		<input type="hidden" name="id" value="${group.id}">
 		<p>
@@ -59,5 +59,6 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<a href="${pageContext.servletContext.contextPath}/index.jsp"> <b>Home page</b></a><br>
 </body>
 </html>

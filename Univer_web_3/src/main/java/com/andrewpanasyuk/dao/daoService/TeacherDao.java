@@ -1,11 +1,11 @@
-package com.andrewpanasyuk.dao.daoIF;
+package com.andrewpanasyuk.dao.daoService;
 
 import java.util.List;
 
 import com.andrewpanasyuk.dao.DAOException;
 import com.andrewpanasyuk.university.Teacher;
 
-public interface TeacherDaoIF {
+public interface TeacherDao {
 
 	void createTeacher(Teacher teacher) throws DAOException;
 

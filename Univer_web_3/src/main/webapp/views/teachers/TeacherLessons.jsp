@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="${pageContext.servletContext.contextPath }/LessonsByDateForTeacher" method="post">
+	<form action="${pageContext.servletContext.contextPath }/Lessons/Teacher/date" method="post">
 		<input type="hidden" name="id" value="${teacher.id}"> Schedule
 		for <b> ${teacher.firstName} ${teacher.lastName} </b>
 		<p>
@@ -18,7 +18,7 @@
 		</p>
 	</form>
 	<form
-		action="${pageContext.servletContext.contextPath }/LessonsByPeriodForTeacher" method="post">
+		action="${pageContext.servletContext.contextPath }/Lessons/Teacher/period" method="post">
 		<input type="hidden" name="id" value="${teacher.id}"> 
 		<p>
 			Show schedule from <input type="date" name="dateFrom"> to <input
@@ -53,5 +53,6 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<a href="${pageContext.servletContext.contextPath}/index.jsp"> <b>Home page</b></a><br>
 </body>
 </html>

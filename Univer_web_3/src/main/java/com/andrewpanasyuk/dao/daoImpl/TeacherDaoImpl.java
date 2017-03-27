@@ -1,4 +1,4 @@
-package com.andrewpanasyuk.dao;
+package com.andrewpanasyuk.dao.daoImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,28 +10,29 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.andrewpanasyuk.dao.daoIF.StudentDaoIF;
-import com.andrewpanasyuk.university.Group;
-import com.andrewpanasyuk.university.Student;
+import com.andrewpanasyuk.dao.ConnectionFactory;
+import com.andrewpanasyuk.dao.DAOException;
+import com.andrewpanasyuk.dao.daoService.TeacherDao;
+import com.andrewpanasyuk.university.Teacher;
 
-public class StudentDao implements StudentDaoIF {
-	public static final Logger log = Logger.getLogger(StudentDao.class);
+public class TeacherDaoImpl implements TeacherDao {
+	public static final Logger log = Logger.getLogger(TeacherDaoImpl.class);
 
 	@Override
-	public void createStudent(Student student) throws DAOException {
-		log.info("request to create Student");
+	public void createTeacher(Teacher teacher) throws DAOException{
+		log.info("Request to create Teacher");
 		Connection con = null;
 		PreparedStatement statement = null;
-		String sql = "INSERT INTO students (first_name, last_name) VALUES (?, ?)";
+		String sql = "INSERT INTO teachers (first_name, last_name) VALUES (?, ?)";
 		try {
 			log.trace("Open connect");
 			con = ConnectionFactory.getConnect();
 			log.trace("Create prepared statement");
 			statement = con.prepareStatement(sql);
-			statement.setString(1, student.getFirstName());
-			statement.setString(2, student.getLastName());
+			statement.setString(1, teacher.getFirstName());
+			statement.setString(2, teacher.getLastName());
 			statement.execute();
-			log.info("Student was created");
+			log.info("Teacher was added");
 		} catch (SQLException e) {
 			log.warn(e.toString());
 			throw new DAOException("Data base error: " + e.getMessage());
@@ -52,22 +53,23 @@ public class StudentDao implements StudentDaoIF {
 		}
 	}
 
+	
 	@Override
-	public void removeStudent(Student student) throws DAOException {
-		log.info("Request to remove student with ID = " + student.getId());
+	public void removeTeacher(Teacher teacher) throws DAOException{
+		log.info("Request to remove Teacher. ID = " + teacher.getId());
 		Connection con = null;
 		PreparedStatement statement = null;
-		String sql = "DELETE FROM students WHERE student_id = ?";
+		String sql = "DELETE FROM teachers WHERE teacher_id = ?";
 		try {
 			log.trace("Open connect");
 			con = ConnectionFactory.getConnect();
 			log.trace("Create prepared statement");
 			statement = con.prepareStatement(sql);
-			statement.setInt(1, student.getId());
+			statement.setInt(1, teacher.getId());
 			statement.execute();
-			log.info("Student was removed");
+			log.info("Teacher with ID = " + teacher.getId() + ", was removed");
 		} catch (SQLException e) {
-			log.warn(e.toString());
+			log.error(e.toString());
 			throw new DAOException("Data base error: " + e.getMessage());
 		} finally {
 			try {
@@ -87,55 +89,20 @@ public class StudentDao implements StudentDaoIF {
 	}
 
 	@Override
-	public void updateStudentFirstName(Student student, String newFirstName) throws DAOException {
-		log.info("Request to update Student's first name");
+	public void updateTeacherFirstName(Teacher teacher, String newFirstName) throws DAOException {
+		log.info("Request to rename teacher with ID = " + teacher.getId());
 		Connection con = null;
 		PreparedStatement statement = null;
-		String sql = "UPDATE students SET first_name = ? WHERE student_id = ?";
+		String sql = "UPDATE teachers SET first_name = ? WHERE teacher_id = ?";
 		try {
 			log.trace("Open connect");
 			con = ConnectionFactory.getConnect();
 			log.trace("Create prepared statement");
 			statement = con.prepareStatement(sql);
 			statement.setString(1, newFirstName);
-			statement.setInt(2, student.getId());
+			statement.setInt(2, teacher.getId());
 			statement.execute();
-			log.info("First name was updated");
-		} catch (SQLException e) {
-			log.warn(e.toString());
-			throw new DAOException("Data base error: " + e.getMessage());
-		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-					log.trace("Statement was closed");
-				}
-				if (con != null) {
-					con.close();
-					log.trace("Connection was closed");
-				}
-			} catch (SQLException e) {
-				log.warn(e.toString());
-				throw new DAOException("Error with closing the database: " + e.getMessage());
-			}
-		}
-	}
-	
-	@Override
-	public void updateGroup(Student student, Group group) throws DAOException {
-		log.info("Request to update group");
-		Connection con = null;
-		PreparedStatement statement = null;
-		String sql = "UPDATE students SET group_id = ? WHERE student_id = ?";
-		try {
-			log.trace("Open connect");
-			con = ConnectionFactory.getConnect();
-			log.trace("Create prepared statement");
-			statement = con.prepareStatement(sql);
-			statement.setInt(1, group.getId());
-			statement.setInt(2, student.getId());
-			statement.execute();
-			log.info("Group was updated");
+			log.info("Teacher with ID = " + teacher.getId() + ", was renamed");
 		} catch (SQLException e) {
 			log.warn(e.toString());
 			throw new DAOException("Data base error: " + e.getMessage());
@@ -157,18 +124,19 @@ public class StudentDao implements StudentDaoIF {
 	}
 
 	@Override
-	public void updateStudentLastName(Student student, String newLastName) throws DAOException {
-		log.info("Request to update Student's last name");
+	public void updateTeacherLastName(Teacher teacher, String newLastName) throws DAOException {
+		log.info("Request to change teacher's last name for Teacher with ID = "
+				+ teacher.getId());
 		Connection con = null;
 		PreparedStatement statement = null;
-		String sql = "UPDATE students SET last_name = ? WHERE student_id = ?";
+		String sql = "UPDATE teachers SET last_name = ? WHERE teacher_id = ?";
 		try {
 			log.trace("Open connect");
 			con = ConnectionFactory.getConnect();
 			log.trace("Create prepared statement");
 			statement = con.prepareStatement(sql);
 			statement.setString(1, newLastName);
-			statement.setInt(2, student.getId());
+			statement.setInt(2, teacher.getId());
 			statement.execute();
 			log.info("Last name was updated");
 		} catch (SQLException e) {
@@ -192,32 +160,75 @@ public class StudentDao implements StudentDaoIF {
 	}
 
 	@Override
-	public List<Student> getAllStudents() throws DAOException{
-		log.info("Request to get a list for all students");
-		List<Student> students = new ArrayList<>();
+	public List<Teacher> getAllTeachers() throws DAOException{
+		log.info("Request for getting list of all teachers");
+		List<Teacher> teachers = new ArrayList<>();
 		Connection con = null;
 		Statement statement = null;
 		ResultSet result = null;
-		String sql = "SELECT * FROM students FULL OUTER JOIN groups ON students.group_id = groups.group_id WHERE students.group_id > 0";
+		String sql = "SELECT * FROM teachers";
 		try {
 			log.trace("Open connect");
 			con = ConnectionFactory.getConnect();
 			log.trace("Create statement");
 			statement = con.createStatement();
 			result = statement.executeQuery(sql);
-			log.trace("Created result table");
+			log.trace("Create result table");
 			while (result.next()) {
-				Student student = new Student();
-				student.setId(result.getInt("student_id"));
-				student.setFirstName(result.getString("first_name"));
-				student.setLastName(result.getString("last_name"));
-				Group group = new Group();
-				group.setId(result.getInt("group_id"));
-					group.setName(result.getString("name"));
-				student.setGroup(group);
-				log.trace("create Student");
-				students.add(student);
-				log.trace("Student was added to list");
+				Teacher teacher = new Teacher();
+				teacher.setId(result.getInt("teacher_id"));
+				teacher.setFirstName(result.getString("first_name"));
+				teacher.setLastName(result.getString("last_name"));
+				teachers.add(teacher);
+				log.trace("Teacher added into a list");
+			}
+			log.info("List of all teachers was created");
+		} catch (SQLException e) {
+			log.warn(e.toString());
+			throw new DAOException("Data base error: " + e.getMessage());
+		} finally {
+			try {
+				if (result != null) {
+					result.close();
+					log.trace("Result was closed");
+				}
+				if (statement != null) {
+					statement.close();
+					log.trace("Statement was closed");
+				}
+				if (con != null) {
+					con.close();
+					log.trace("Connection was closed");
+				}
+			} catch (SQLException e) {
+				log.warn(e.toString());
+				throw new DAOException("Error with closing the database: " + e.getMessage());
+			}
+
+		}
+		log.info("Returned list of teachers");
+		return teachers;
+	}
+
+	public Teacher getLastTeacher() throws DAOException{
+		log.info("Request for getting a last instance from the list of all teachers");
+		Teacher teacher = new Teacher();
+		Connection con = null;
+		Statement statement = null;
+		ResultSet result = null;
+		String sql = "SELECT * FROM teachers WHERE teacher_id = (SELECT max(teacher_id) from teachers)";
+		try {
+			log.trace("Open connect");
+			con = ConnectionFactory.getConnect();
+			log.trace("Create statement");
+			statement = con.createStatement();
+			result = statement.executeQuery(sql);
+			log.trace("Create result table");
+			while (result.next()) {
+				teacher.setId(result.getInt("teacher_id"));
+				teacher.setFirstName(result.getString("first_name"));
+				teacher.setLastName(result.getString("last_name"));
+				log.trace("Create teacher");
 			}
 		} catch (SQLException e) {
 			log.warn(e.toString());
@@ -242,86 +253,33 @@ public class StudentDao implements StudentDaoIF {
 			}
 
 		}
-		log.info("Returned the list of students");
-		return students;
+		log.info("returned last teacher");
+		return teacher;
 	}
 
 	@Override
-	public Student getLastStudent() throws DAOException {
-		log.info("Request to get last added student");
-		Student student = new Student();
-		Connection con = null;
-		Statement statement = null;
-		ResultSet result = null;
-		String sql = "SELECT * FROM students WHERE student_id = (SELECT max(student_id) from students)";
-		try {
-			log.trace("Open connect");
-			con = ConnectionFactory.getConnect();
-			log.trace("Create statement");
-			statement = con.createStatement();
-			result = statement.executeQuery(sql);
-			log.trace("Created result table");
-			while (result.next()) {
-				student.setId(result.getInt("student_id"));
-				student.setFirstName(result.getString("first_name"));
-				student.setLastName(result.getString("last_name"));
-				log.info("Created student");
-			}
-		} catch (SQLException e) {
-			log.warn(e.toString());
-			throw new DAOException("Data base error: " + e.getMessage());
-		} finally {
-			try {
-				if (result != null) {
-					result.close();
-					log.trace("Result was closed");
-				}
-				if (statement != null) {
-					statement.close();
-					log.trace("Statement was closed");
-				}
-				if (con != null) {
-					con.close();
-					log.trace("Connection was closed");
-				}
-			} catch (SQLException e) {
-				log.warn(e.toString());
-				throw new DAOException("Error with closing the database: " + e.getMessage());
-			}
-
-		}
-		log.info("Returned last added student");
-		return student;
-	}
-
-	@Override
-	public Student getStudentById(int id) throws DAOException {
-		log.info("Request to getting student by ID. ID = " + id);
-		Student student = null;
+	public Teacher getTeacherByID(int teacher_id) throws DAOException{
+		log.info("request for getting Teacher by ID. ID = " + teacher_id);
+		Teacher teacher = null;
 		Connection con = null;
 		PreparedStatement statement = null;
 		ResultSet result = null;
-		String sql = "SELECT * FROM students FULL OUTER JOIN groups ON students.group_id = groups.group_id WHERE students.student_id = ?";
+		String sql = "SELECT * FROM teachers WHERE teacher_id = ?";
 		try {
 			log.trace("Open connect");
 			con = ConnectionFactory.getConnect();
 			log.trace("Create prepared statement");
 			statement = con.prepareStatement(sql);
-			statement.setInt(1, id);
+			statement.setInt(1, teacher_id);
 			statement.execute();
 			result = statement.getResultSet();
 			log.trace("Created result table");
 			while (result.next()) {
-				student = new Student();
-				student.setId(result.getInt("student_id"));
-				student.setFirstName(result.getString("first_name"));
-				student.setLastName(result.getString("last_name"));
-				Group group = new Group();
-				group.setId(result.getInt("group_id"));
-				group.setName(result.getString("name"));
-				log.trace("Created Group");
-				student.setGroup(group);
-				log.trace("Created Student");
+				teacher = new Teacher();
+				teacher.setId(result.getInt("teacher_id"));
+				teacher.setFirstName(result.getString("first_name"));
+				teacher.setLastName(result.getString("last_name"));
+				log.trace("Teacher was created");
 			}
 		} catch (SQLException e) {
 			log.warn(e.toString());
@@ -344,9 +302,9 @@ public class StudentDao implements StudentDaoIF {
 				log.warn(e.toString());
 				throw new DAOException("Error with closing the database: " + e.getMessage());
 			}
-
 		}
-		log.info("Was returned a student by ID");
-		return student;
+		log.info("Teacher by ID was returned");
+		return teacher;
 	}
+
 }

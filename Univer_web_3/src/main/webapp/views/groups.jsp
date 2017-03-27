@@ -21,14 +21,16 @@
 		<c:forEach items="${groups}" var="group">
 			<tr>
 				<td>${group.id}</td>
-				<td><a href="${pageContext.servletContext.contextPath}/GroupSelectStudentsServlet?id=${group.id}">${group.name}</a></td>
-				<td><a href="${pageContext.servletContext.contextPath}/ScheduleForGroupServlet?id=${group.id}">Schedule</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/GroupSelectStudents?id=${group.id}">${group.name}</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/Lessons/group?id=${group.id}">Schedule</a></td>
 				
-				<td><a href="${pageContext.servletContext.contextPath}/GroupUpdateServlet?id=${group.id}">Update</a></td>
-				<td><a href="${pageContext.servletContext.contextPath}/GroupRemoveServlet?id=${group.id}">Remove</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/Group/update?id=${group.id}">Update</a></td>
+				<td><a href="${pageContext.servletContext.contextPath}/GroupRemove?id=${group.id}">Remove</a></td>
 			</tr>
 		</c:forEach>
 	</table>
+	<a href="${pageContext.servletContext.contextPath}/index.jsp"> <b>Home page</b></a><br>
+	
 </body>
 
 
